@@ -87,3 +87,18 @@ R4.12 Implementing loops
     }while(condition)
 
 R4.14 Calendar problem
+
+    array of days = [sun, mon, tue, wed, thu, fri, sat];
+
+    for(int i=0; i<=3; i++{
+        print('  ')
+        //three empty day because 1st starts on Wed
+    }
+    for(int j =0 ; j <= 31; j++){
+        print(j+' ')
+
+        if(j%7 == 4):
+            print('\n')
+            //if the remainder is 4, it is Saturday
+            //new line when it's Saturday
+    }
