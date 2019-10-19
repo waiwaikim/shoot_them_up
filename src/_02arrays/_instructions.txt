@@ -1,4 +1,4 @@
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+    &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 proArrays : Arrays, ArrayLists, Exceptions, and File i/o. Note that this project
 has 101 total points offered out of a possible 100.  If you score 101/100, you get
 1 point extra credit.
