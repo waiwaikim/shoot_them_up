@@ -42,15 +42,25 @@ R8.12 Constructors
     Q: How many constructors can a class have? Can you have a class with no constructors?
     Q: If a class has more than one constructor, which of them gets called?
 
+    A class can have multiple classes. There is no limit. If you do not have a constructor, a default constructor with no argument,
+    aka Miranda constructor, will be generated in the background. If you have more than one constructor, the compile will pick the
+    appropriate constructor that matches the construction arguments.
+
 R8.16 Instance variables
-    Instance variables are “hidden” by declaring them as private, but they aren’t hidden very well at all. Anyone can read the class declaration.
-    Explain to what extent the private reserved word hides the private implementation of a class.
+   Q: Instance variables are “hidden” by declaring them as private, but they aren’t hidden very well at all. Anyone can read the class declaration.
+   Q: Explain to what extent the private reserved word hides the private implementation of a class.
+
 
 R8.19 The this reference
-    What is the this reference? Why would you use it?
+    Q: What is the this reference? Why would you use it?
+    When you write a class, you don't have an object yet. Thus, there is no way to call an object or an implicit parameter yet.
+    Thus, this keyword is the way to refer the class as an object.
 
 R8.20 Zero, null, false, empty String
-    What is the difference between the number zero, the null reference, the value false, and the empty string?
+    Q: What is the difference between the number zero, the null reference, the value false, and the empty string?
+    These are the different default values of an instance variable when it's not initialized in a constructor.
+    A number instance variable is set to 0. A boolean instance variable is initialized to be false. Object and array references are
+    initialized to be null.
 
 
 
