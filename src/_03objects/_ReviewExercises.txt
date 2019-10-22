@@ -2,8 +2,55 @@
 # Use this file to answer Review Exercises from the Big Java textbook
 #########################################################################
 
+R8.1 Encapsulation
+    Encapsulation is the act of providing a public interface and hiding the implementation details. Every class has a public interface,
+    which is a collection of methods through which the project of the class can be manipulated. Encapsulation is useful because it enables
+    changes in the implementation without affecting users of a class. In other words, encapsulation enables safe way to program. It makes
+    all instance variables private, while providing an user with public gettor and settor method.
+
+R8.4 Public interface
+    Q: What is the public interface of a class? How does it differ from the implementation of a class?
+
+    Public interface is a set of methods through which the objects of the class can be manipulated. This means that user must know the public
+    interface in order to work with a given object. On the other hand, the user doesn't need to know how the object's data or its methods are
+    implemented. For example, private instance variables an essential part of encapsulation.
+
+R8.7 Instance versus static
+    Q: What is an instance method, and how does it differ from a static method?
+    Instance method is a method invoked on an object. An instance method has an implicit parameter which is hte object that the method is invoked on.
+    An instance method may have zero or more explicit parameters. On the other hand, a static method is not invoked on an object.
 
 
+R8.8 Mutator and accessor
+    Q: What is a mutator method? What is an accessor method?
+    A mutator method modifies the object on which it operates on while an accessor method queries the object for some information without changing it.
+
+R8.9 Implicit parameter
+    Q: What is an implicit parameter? How does it differ from an explicit parameter?
+    Implicit parameter is an object that an instance method is invoked on. It is called implicit because in Java, you don't actually need to write the
+    implicit parameter in the method declaration. However, explicit parameters are clearly mentioned in the method declarations.
+
+R8.10 Implicit parameter
+    Q: How many implicit parameters can an instance method have? How many implicit parameters can a static method have?
+    Q: How many explicit parameters can an instance method have?
+
+    You can have only one implicit parameter that an instance method can invoke.
+    A static method has no implicit parameters.
+    An instance method can have as many explicit parameters as it can have. No limit.
+
+R8.12 Constructors
+    Q: How many constructors can a class have? Can you have a class with no constructors?
+    Q: If a class has more than one constructor, which of them gets called?
+
+R8.16 Instance variables
+    Instance variables are “hidden” by declaring them as private, but they aren’t hidden very well at all. Anyone can read the class declaration.
+    Explain to what extent the private reserved word hides the private implementation of a class.
+
+R8.19 The this reference
+    What is the this reference? Why would you use it?
+
+R8.20 Zero, null, false, empty String
+    What is the difference between the number zero, the null reference, the value false, and the empty string?
 
 
 
