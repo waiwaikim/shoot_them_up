@@ -62,6 +62,3 @@ R8.20 Zero, null, false, empty String
     A number instance variable is set to 0. A boolean instance variable is initialized to be false. Object and array references are
     initialized to be null.
 
-
-
-jkk
