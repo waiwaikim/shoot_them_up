@@ -1,13 +1,12 @@
-package _03objects;
+package _03objects.P8_5;
 
-public class P8_5 {
+public class SodaCan {
 
     private int height;
     private int radius;
-    public P8_5(int h, int r){
+    public SodaCan(int h, int r){
         this.height = h;
         this.radius = r;
-
     }
 
     public double getSurfaceArea(){
@@ -19,7 +18,7 @@ public class P8_5 {
     }
 
     public static void main(String[] args) {
-        P8_5 sodaCan = new P8_5(10, 2);
+        SodaCan sodaCan = new SodaCan(10, 2);
         System.out.println("Surface area: "+sodaCan.getSurfaceArea());
         System.out.println("Volume: " + sodaCan.getVolume());
     }

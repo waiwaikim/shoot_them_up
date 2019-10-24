@@ -1,16 +1,16 @@
-package _03objects;
+package _03objects.P8_1;
 
-public class P8_1 {
+public class Microwave {
 
     private int cookTime;
     private int cookPower;
 
-    public P8_1 (){
+    public Microwave(){
         cookTime = 0;
         cookPower = 1;
     }
 
-    public P8_1(int t, int p) throws Exception{
+    public Microwave(int t, int p) throws Exception{
         cookTime = t;
         if(p<1 || p>2) throw new Exception("Invalid Power Level");
         cookPower = p;
@@ -36,7 +36,7 @@ public class P8_1 {
     public static void main(String[] args) throws Exception {
         //This driver is to test the class above
 
-        P8_1 micro1 = new P8_1();
+        Microwave micro1 = new Microwave();
         micro1.plus30();
         micro1.plus30();
         micro1.start();
@@ -44,9 +44,9 @@ public class P8_1 {
         micro1.reset();
         micro1.start();
 
-        P8_1 micro2 = new P8_1(240, 2);
+        Microwave micro2 = new Microwave(240, 2);
         micro2.start();
 
-        P8_1 micro3 = new P8_1(240, 3);
+        Microwave micro3 = new Microwave(240, 3);
     }
 }
