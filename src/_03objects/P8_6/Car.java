@@ -1,4 +1,4 @@
-package _03objects.P0_2.P8_6;
+package _03objects.P8_6;
 
 public class Car {
 

@@ -1,4 +1,4 @@
-package _03objects.P0_2.P8_7;
+package _03objects.P8_7;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package _03objects.P0_2;
+package _03objects;
 
 public class P8_5 {
 
