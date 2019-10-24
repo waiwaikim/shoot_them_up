@@ -1,11 +1,11 @@
-package _03objects.P0_2;
+package _03objects.P0_2.P8_6;
 
-public class P8_6 {
+public class Car {
 
     private final float fuelEfficiency;
     private float fuelLevel;
 
-    public P8_6(float f){
+    public Car(float f){
         fuelEfficiency = f;
         fuelLevel = 0;
     }
@@ -22,10 +22,10 @@ public class P8_6 {
     }
 
     public static void main(String[] args) {
-        P8_6 myHybrid = new P8_6(50);
+        Car myHybrid = new Car(50);
         myHybrid.addGas(20);
         myHybrid.drive(100);
-        System.out.println("amout of gas left in the car is " + myHybrid.getGasLevel());
+        System.out.println("amount of gas left in the car is " + myHybrid.getGasLevel());
 
     }
 }
