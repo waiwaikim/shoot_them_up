@@ -2,6 +2,45 @@
 # Use this file to answer Review Exercises from the Big Java textbook
 #########################################################################
 
+R9.1 Superclass and subclass
+    a.Employee, Manager
+        Superclass - Employee
+        Subclass - Manager
+    b.GraduateStudent, Student
+        Superclass - Student
+        Subclass - GraduateStudent
+    c.Person, Student
+        superclass - Person
+        subclass - Student
+    d.Employee, Professor
+        superclass - Employee
+        subclass - Professor
+    e.BankAccount, CheckingAccount
+        superclass - BankAccount
+        subclass - CheckingAccount
+    f.Vehicle, Car
+        superclass - Vehicle
+        subclass - car
+    g.Vehicle, Minivan
+        superclass - Vehicle
+        subclass - Minivan
+    h.Car, Minivan
+        superclass - Car
+        subclass - Minivan
+    i.Truck, Vehicle
+        superclass - Vehicle
+        subclass - Truck
+
+R9.2 superclass and subclass
+R9.4 SavingsAccount
+R9.6 Sandwich
+R9.7 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+R9.8 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+R9.9 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+R9.10 Casting
+R9.11 instanceof operator
+R9.14 Edible interface
+
 
 
 
