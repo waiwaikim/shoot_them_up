@@ -1,0 +1,15 @@
+@startuml
+
+Person <|-- Employee
+Person <|-- Student
+Student <|-- TeachingAssistant
+Employee <|-- Professor
+Employee <|-- Secretary
+Employee <|-- Janitor
+Professor<|-- DepartmentChair
+Person <|-- SeminarSpeaker
+Course <|-- Seminar
+Course <|-- Lecture
+Course <|-- ComputerLab
+
+@enduml

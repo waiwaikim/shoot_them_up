@@ -1,0 +1,12 @@
+@startuml
+
+Vehicle <|-- Car
+Vehicle <|--Truck
+Car <|-- Sedan
+Car <|-- Coupe
+Truck <|-- PickupTruck
+Car <|--SportUtilityVehicle
+Car <|-- Minivan
+Vehicle <|--Bicycle
+Vehicle <|-- Motorcycle
+@enduml

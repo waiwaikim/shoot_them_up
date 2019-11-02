@@ -32,13 +32,94 @@ R9.1 Superclass and subclass
         subclass - Truck
 
 R9.2 superclass and subclass
+    Q: Consider a program for managing inventory in a small appliance store.
+    Why isn’t it useful to have a superclass SmallAppliance and subclasses Toaster, CarVacuum, TravelIron, and so on?
+
+    A: It doesn't make sense to have a superclass for Toaster, CarVacuum, TravelIron because the attributes of those appliances
+    are very different. It seems they don't have common functionality.
+
 R9.4 SavingsAccount
+    Q: Which methods does the SavingsAccount class in How To 9.1 inherit from its superclass?
+    Which methods does it override? Which methods does it add?
+
+    A: SavingsAccount class inherits 1) deposit(), 2) withdraw(), 3)getBalance() and 4) monthEnd()
+    SavingsAccount class overrides withdraw() to ensure the balance is above the minimum balance.
+    Also, it overrides monthEnd() to deposit earned interest at the end of a month.
+
 R9.6 Sandwich
+    Q: Suppose the class Sub extends the class Sandwich. Which of the following assignments are legal?
+       Sandwich x = new Sandwich();
+       Sub y = new Sub();
+       a.x = y;
+       b.y = x;
+       c.y = new Sandwich();
+       d.x = new Sub();
+
+       A: a. x=y; and d. x=new Sub(); are legal. These two assignments are downcasting from a superclass to subclass.
+       While b. and c. are upcasting are NOT legal because they are potentially dangerous assignments.
+
 R9.7 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+    Q: Draw an inheritance diagram that shows the inheritance relationships between these classes
+        •Person
+        •Employee
+        •Student
+        •Instructor
+        •Classroom
+        •Object
+
+    A: Please find R9_7.puml w/ Car.java
+
 R9.8 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+    Q: In an object-oriented traffic simulation system, we have the classes listed below.
+    Draw an inheritance diagram that shows the relationships between these classes.
+        •Vehicle
+        •Car
+        •Truck
+        •Sedan
+        •Coupe
+        •PickupTruck
+        •SportUtilityVehicle
+        •Minivan
+        •Bicycle
+        •Motorcycle
+
+    A: Please find R9_8.puml w/ Car.java
 R9.9 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+    Q: What inheritance relationships would you establish among the following classes?
+        •Student
+        •Professor
+        •TeachingAssistant
+        •Employee
+        •Secretary
+        •DepartmentChair
+        •Janitor
+        •SeminarSpeaker
+        •Person
+        •Course
+        •Seminar
+        •Lecture
+        •ComputerLab
+
+    A: please find R9_9.puml w/ Car.java
+
 R9.10 Casting
+    Q: How does a cast such as (BankAccount) x differ from a cast of number values such as (int) x?
+
+    A: The (BankAccount) x cast is casting the variable type of the object without changing its value.
+    On the other hand, (int) x cast can actually change the underlying primitive value.
+
 R9.11 instanceof operator
+    Q: Which of these conditions returns true? Check the Java documentation for the inheritance patterns.
+    Recall that System.out is an object of the PrintStream class.
+
+    A:
+    a.System.out instanceof PrintStream - True
+    b.System.out instanceof OutputStream - True
+    c.System.out instanceof LogStream - False
+    d.System.out instanceof Object - Ture
+    e.System.out instanceof Closeable - False
+    f.System.out instanceof Writer - False
+
 R9.14 Edible interface
 
 
