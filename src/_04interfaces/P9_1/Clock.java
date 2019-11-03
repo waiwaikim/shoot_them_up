@@ -24,10 +24,6 @@ public class Clock {
     public String getTime(){
         String time = "";
 
-        /*time += Integer.toString(now.getHour()) + ":";
-        time += Integer.toString(now.getMinute());
-        */
-
         time += this.getHours() + ":"+ this.getMinutes();
         return time;
     }
