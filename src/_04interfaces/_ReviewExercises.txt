@@ -67,7 +67,7 @@ R9.7 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grade
         •Classroom
         •Object
 
-    A: Please find R9_7.puml w/ Car.java
+    A: Please find R9_7.puml in _04interfaces
 
 R9.8 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
     Q: In an object-oriented traffic simulation system, we have the classes listed below.
@@ -83,7 +83,7 @@ R9.8 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grade
         •Bicycle
         •Motorcycle
 
-    A: Please find R9_8.puml w/ Car.java
+    A: Please find R9_8.puml in _04interfaces
 R9.9 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
     Q: What inheritance relationships would you establish among the following classes?
         •Student
@@ -100,7 +100,7 @@ R9.9 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grade
         •Lecture
         •ComputerLab
 
-    A: please find R9_9.puml w/ Car.java
+    A: please find R9_9.puml in _04interfaces
 
 R9.10 Casting
     Q: How does a cast such as (BankAccount) x differ from a cast of number values such as (int) x?
@@ -116,13 +116,25 @@ R9.11 instanceof operator
     a.System.out instanceof PrintStream - True
     b.System.out instanceof OutputStream - True
     c.System.out instanceof LogStream - False
-    d.System.out instanceof Object - Ture
+    d.System.out instanceof Object - True
     e.System.out instanceof Closeable - False
     f.System.out instanceof Writer - False
 
 R9.14 Edible interface
+    Q: Suppose the class Sandwich implements the Edible interface, and you are given the variable declarations
+       Sandwich sub = new Sandwich();
+       Rectangle cerealBox = new Rectangle(5, 10, 20, 30);
+       Edible e = null;
+       Which of the following assignment statements are legal?
 
-
+        a.e = sub;  - legal
+        b.sub = e;  - not legal
+        c.sub = (Sandwich) e;   - legal
+        d.sub = (Sandwich) cerealBox;   - not legal
+        e.e = cerealBox;    - not legal
+        f.e = (Edible) cerealBox;   - not legal
+        g.e = (Rectangle) cerealBox;    - not legal
+        h.e = (Rectangle) null;     - not legal
 
 
 
