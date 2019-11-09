@@ -1,4 +1,4 @@
-package _05dice;
+package _05dice.P10_19;
 
 
 import java.awt.event.ActionEvent;
@@ -9,8 +9,8 @@ import  java.awt.event.MouseEvent;
 
 public class InvestmentFrame3 extends JFrame {
 
-    private static final int FRAME_WIDTH = 400;
-    private static final int FRAME_HEIGHT = 250;
+    private static final int FRAME_WIDTH = 800;
+    private static final int FRAME_HEIGHT = 400;
 
     private static final int AREA_ROWS = 10;
     private static final int AREA_COLUMNS = 30;
