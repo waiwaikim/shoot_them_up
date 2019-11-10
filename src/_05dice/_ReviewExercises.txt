@@ -136,8 +136,6 @@ R11.20 Events
         BUTTON3 - Indicates mouse button #3;
 
 
-
-
 R11.21 ActionListener versus MouseListener
     Q: Why does the ActionListener interface have only one method, whereas the MouseListener has five methods?
 
