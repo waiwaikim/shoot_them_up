@@ -139,6 +139,9 @@ R11.20 Events
 R11.21 ActionListener versus MouseListener
     Q: Why does the ActionListener interface have only one method, whereas the MouseListener has five methods?
 
+    A: A mouse can do many things. It can be clicked. It can be dragged. It can be double-clicked. It can be moved.
+    A mouse can hover over things. On the other hand, a key can only be pressed. Thus, an action listener for a mouse
+    is more complicated.
 
 
 
