@@ -35,7 +35,7 @@ public class CircleComponent extends JComponent
     }
     public void moveCircleTo(int x1, int y1, int x2, int y2){
         centerX = x1;
-        centerY = y2;
+        centerY = y1;
         radius = Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2,2));
         repaint();
     }

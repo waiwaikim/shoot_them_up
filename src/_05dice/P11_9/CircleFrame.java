@@ -26,7 +26,6 @@ public class CircleFrame extends JFrame {
 
                 centerX = event.getX();
                 centerY = event.getY();
-                System.out.println("CenterX: " + centerX + " centerY: " + centerY);
                 first = false;
                 second = false;
             }
@@ -34,7 +33,6 @@ public class CircleFrame extends JFrame {
 
                 peripheryX = event.getX();
                 peripheryY = event.getY();
-                System.out.println("PeripheryX: "+ peripheryX + " PerpheryY: " +peripheryY);
                 first= true;
                 second = true;
                 myCircle.moveCircleTo(centerX, centerY, peripheryX, peripheryY);
