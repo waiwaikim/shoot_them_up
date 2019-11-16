@@ -1,0 +1,28 @@
+@startuml
+class FileOrganizer
+class Country
+
+FileOrganizer o--Country
+
+
+
+class FileOrganizer{
+-ArrayList<Country> countries
+
++largestArea()
++largestPopulation()
++higestDensity()
+
+}
+
+class Country{
+-String name
+-int population
+-int area
+
++getName()
++getPopulation()
++getArea()
++calculateDensity()
+}
+@enduml

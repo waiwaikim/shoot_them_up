@@ -1,0 +1,44 @@
+@startuml
+
+class Invoice {
+-HashMap<Product, Integer> orders
+-paymentsReceived
+-amountDue
+
++addItems()
++deductItems()
++updatePaymentReceived()
++updateAmountDue()
+}
+class Address{
+-street
+-city
+-state
+-zipCode
+
++getAddress()
++changeAddress()
+}
+class Customer{
+-name
+-shippingAddress
+-billingAddress
+
++shipProduct()
++sendBilling()
+}
+
+class Product{
+-name
+-price
+
++display()
++changeName()
++changePrice()
+
+}
+Customer o-- Invoice
+Invoice o-- Product
+Customer o-- Address
+
+@enduml

@@ -2,7 +2,83 @@
 # Use this file to answer Review Exercises from the Big Java textbook
 #########################################################################
 
+R12.1 OO Analysis and Design
+    Q: List the steps in the process of object-oriented design that this chapter recommends for student use.
 
+    A: First, we need to discover classes. Often, nouns are classes and verbs are methods.
+    Second, we need to determine the responsibilities of each class. We can use CRC card method.
+    Thirdly, we need to determine the relationship among the classes.
+
+R12.2 OO Analysis and Design
+    Q: Give a rule of thumb for how to find classes when designing a program
+
+    A: Classes often correspond to nouns in the requirement specifications.
+
+R12.3 OO Analysis and Design
+    Q: Give a rule of thumb for how to find methods when designing a program.
+
+    A: Methods often correspond to verbs in the requirement specifications.
+
+R12.8 Relationships
+    Q: Write CRC cards for the Coin and CashRegister classes described in Section 12.1.3.
+
+    A: CRC Card for Class: Coin, Responsibility: stores the value of a coin, Collaborators: None
+       CRC Card for Class: CashRegistor, Responsibility: totals up sales and compute change due, Collaborators: Coin
+
+R12.9 CRC Quiz
+    Q: Write CRC cards for the Quiz and Question classes in Section 12.2.2.
+
+    A: CRC for Class: ChoiceQuestion, Responsibility: a question with multiple choices , Collaborators: inherits from Question
+       CRC for Class: Question, Responsibility: a question with a text and answer , Collaborators: None
+       CRC for Class: Quiz, Responsibility: contains a list of questions , Collaborators: Question
+
+
+R12.10 UML Quiz
+    Q: Draw a UML diagram for the Quiz, Question, and ChoiceQuestion classes. The Quiz class is described in Section 12.2.2.
+
+    A: Please find R12_10.puml
+
+R12.11 CRC Cards
+    Q: A file contains a set of records describing countries. Each record consists of the name of the country, its population,
+    and its area. Suppose your task is to write a program that reads in such a file and prints
+       •The country with the largest area.
+       •The country with the largest population.
+       •The country with the largest population density (people per square kilometer).
+
+   Think through the problems that you need to solve. What classes and methods will you need? Produce a set of CRC cards,
+   a UML diagram, and a set of javadoc comments.
+
+    A: CRC for Class: Country, Responsibilities:  contains a country name and its information, Collaborators: None
+       CRC for Class: FileOrganizer. Responsibilities: returns a country with a desired attribute, Collaborator: Country
+
+       please find R12_11.puml for UML
+
+
+R12.13 UML Diagram
+    Q: Consider the following problem description:
+       Users place coins in a vending machine and select a product by pushing a button.
+       If the inserted coins are sufficient to cover the purchase price of the product, the product is dispensed and change is given.
+       Otherwise, the inserted coins are returned to the user.
+       What classes should you use to implement a solution?
+
+   A: please find R12_13.puml
+
+R12.14 UML Diagram
+    Q: Consider the following problem description:
+       Employees receive their biweekly paychecks. They are paid their hourly rates for each hour worked;
+       however, if they worked more than 40 hours per week, they are paid overtime at 150 percent of their regular wage.
+
+       What classes should you use to implement a solution?
+
+    A: please find R12_12.puml
+
+R12.15 ULM Diagram
+    Q: Consider the following problem description:
+       Customers order products from a store. Invoices are generated to list the items and quantities ordered, payments received, and amounts still due.
+       Products are shipped to the shipping address of the customer, and invoices are sent to the billing address.
+       Draw a UML diagram showing the aggregation relationships between the classes Invoice, Address, Customer, and Product.
+
+    A: please find R12_15.puml
 
 
 

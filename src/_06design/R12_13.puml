@@ -1,0 +1,37 @@
+@startuml
+
+class VendingMachine
+class Product
+class Coin
+
+VendingMachine o-- Product
+VendingMachine o-- Coin
+
+
+class VendingMachine{
+-ArrayList<Product> products
+-ArrayList<Coin> payment
+-chosenProduct
+
++addProduct()
++presentProduct()
++chooseProduct()
++checkPrice()
++returnChange()
+}
+
+class Product{
+-name
+-price
++setText()
++setPrice()
++display()
+}
+
+class Coin{
+-name
+-value
++getValue()
++getName()
+}
+@enduml

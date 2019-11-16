@@ -1,0 +1,18 @@
+@startuml
+
+class Employee
+
+class Employee {
+-name
+-title
+-hourlyRate
+-hoursWorked
+-payCheck
+
++display()
++inputHours()
++promotion()
++calculatePaycheck()
+}
+
+@enduml

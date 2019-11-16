@@ -1,0 +1,29 @@
+@startuml
+Question <|-- ChoiceQuestion
+Quiz o-- Question
+
+
+class Quiz {
+-ArrayList<Question> questions
++addQuestion()
++presentQuestions()
+
+}
+
+class Question{
+- text
+- answer
++setText()
++setAnswer()
++checkAnswer()
++display()
+}
+
+class ChoiceQuestion{
+-choices
++addChoice()
++display()
+}
+
+
+@enduml
