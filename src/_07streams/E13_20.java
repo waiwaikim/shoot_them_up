@@ -17,8 +17,9 @@ public class E13_20 {
         bills.add(20);
         bills.add(100);
         int targetPrice = 10;
-        
+
         System.out.println(find_changes(targetPrice, bills).toString());
+        //show answer 
     }
 
     static ArrayList<ArrayList<Integer>> find_changes(int price, ArrayList<Integer> bills ){
