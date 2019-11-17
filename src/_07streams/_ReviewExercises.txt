@@ -2,6 +2,92 @@
 # Use this file to answer Review Exercises from the Big Java textbook
 #########################################################################
 
+R13.1 Terms
+    Q: Define the terms
+       a.Recursion: recursive methods are methods that call themselves. recursion solves a problem by solving a smaller problem
+
+       b.Iteration: iterative methods use a loop, such as for loop or while loop, to solve a problem
+
+       c.Infinite recursion: Infinite recursion occurs when a recursion never stop by keeping calling itself.
+       This can happen when a recursive call never reaches a base case.
+
+       d.Recursive helper method: A recursive helper method is a recursive method called by another non-recursive method.
+       It is helpful when one wants to make a distinction between a non-recursive method the public is expected to use and
+       a recursive method that actually solves a problem.
+
+R13.2 Smallest value
+    Q: Outline, but do not implement, a recursive solution for finding the smallest value in an array.
+
+    A: The base case is when the length of an array is 1. Return the one element. Otherwise, compare two elements, disregard
+    the element that is larger, and keep the smaller element. The next call introduces a element that has been tested. The last
+    element returned by the recursion is the smallest element.
+
+R13.4 Sort array of numbers
+    Q: Outline, but do not implement, a recursive solution for sorting an array of numbers. Hint: First find the smallest value in the array.
+
+    A: The base case when the an array has one element. The recursive call returns the array itself. Otherwise, find the smallest element in
+    the array, swap the element with the element in the head of the array. Recursively sort the remaining array.
+
+
+R13.6 Exponents recursively
+    Q: Write a recursive definition of xn, where n ≥ 0, similar to the recursive definition of the Fibonacci numbers.
+    Hint: How do you compute xn from xn – 1? How does the recursion terminate?
+
+    A: base case: X^0 = 1
+       otherwise: X^n = X * X^(n-1)
+
+R13.8 Factorial recursively
+    Q: Write a recursive definition of n! = 1 × 2 × … × n, similar to the recursive definition of the Fibonacci numbers.
+
+    A: base case: 0! = 1
+       otherwise: n! = n * (n-1)!
+
+R19.1 operations on Stream<String>
+    Q: Provide expressions that compute the following information about a Stream<String>.
+       a.How many elements start with the letter a?
+            Stream<String> words = . . . ;
+            long count = words.filter(w -> w.substring(0, 1).equals("a")).count();
+
+       b.How many elements of length greater than ten start with the letter a?
+            Stream<String> words = . . .;
+            Stream<String> aWords = words.filter(w -> w.substring(0, 1).equals("a"));
+            long count = aWords.filter(w -> w.length()>10);
+
+       c.Are there at least 100 elements that start with the letter a? (Don’t count them all if there are more.)
+            Stream<String> words = . . . ;
+            Stream<String> aWords = words.filter(w -> w.substring(0, 1).equals("a")).limit(100)
+
+
+R19.3 How to read Java8
+    Q: What is the difference between these two expressions?
+       words.filter(w -> w.length() > 10).limit(100).count()
+       words.limit(100).filter(w -> w.length() > 10).count()
+
+    A: The first expression counts the number of element that has the length greater than 10. The number of count is limited at 100.
+    Thus, if the stream has more than 100 words of which length is greater than 100, the number of element after the filter is 100.
+    The number of element after the filer will be less than 100 if the total number of element with length greater than 10 is less than 100 in
+    the entire stream. The second expression examines the first 100 elements of the stream in order to determine each element satisfies
+     the the argument in the filter method.
+
+
+R19.6 Transforming values
+    Q: How do you turn a Stream<Double> into a Stream<String>, with each number turned into the equivalent string?
+    How do you turn it back into a Stream<Double>?
+
+    A: Stream<Double> myStream = . . . ;
+       Stream<String> stringStream = myStream.map( (Double) d -> d.toString() );
+
+       Stream<Double> backToDouble = stringStream.mapToDouble( num -> Double.parseDouble(num));
+
+R19.11 Terminal operations
+    Q: List all terminal operations on object streams and primitive-type streams that have been discussed in this chapter.
+
+    A: count(), findAny(), findFirst(), max(), min(), toArray(), collect(), forEach(), allMatch(), anyMatch(), noneMatch()
+
+R19.12 Collectors
+    Q: List all collectors that were introduced in this chapter.
+
+    A: Collectors.toList(), Collectors.toSet(), Collectors.joining(), Collectors.groupingBy()
 
 
 
