@@ -32,7 +32,6 @@ Programming exercises: 7 points each.
 
 E13.4 binary recursively.
 E13.20 Paying for something with bills recursively
-
 P13.3 Telephone words recursively
 
 
