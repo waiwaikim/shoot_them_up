@@ -11,7 +11,7 @@ public class E19_5 {
     public static void main(String[] args) {
         Stream<String> words = Arrays.asList("A", "B", "C", "D").stream();
 
-        System.out.println(toStringTest(words, 4));
+        System.out.println(toString(words, 4));
 
     }
     public static String toStringTest(Stream<Rectangle> stream, int n){
@@ -23,16 +23,17 @@ public class E19_5 {
 
       return result;
         //String myResult = stream.collect(Collectors.joining(","));
-     //   return myResult;
+        //return myResult;
 
-        //https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
+
     }
 
 
     public static <T> String toString(Stream<T> stream, int n){
-        String myResult = stream.collect(StringBuilder::new, StringBuilder::append,
-                StringBuilder::append).toString();
-        return myResult;
+        //String myResult = stream.collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString();
+
+        String result = stream.map( t -> t.toString()).limit(n).collect(Collectors.joining(","));
+        return result;
 
         //https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html
     }
