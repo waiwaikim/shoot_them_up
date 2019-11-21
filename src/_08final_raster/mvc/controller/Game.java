@@ -34,7 +34,6 @@ public class Game implements Runnable, KeyListener {
     private final int GOOMBA_INTRO_INTERVAL = 4500; // Milliseconds
     private final int KOOPA_INTRO_INTERVAL = 12000; // Milliseconds
     private final int PARATROOPA_INTRO_INTERVAL = 12000; // Milliseconds
-
     private long lStartTime = System.currentTimeMillis();
 
 	private boolean bMuted = false;
