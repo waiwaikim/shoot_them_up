@@ -44,7 +44,9 @@ public class CommandCenter {
 	private static CommandCenter instance = null;
 
     private int nMoveCountX = 0;
+    private int nMoveCountY = 0;
     private int nDeltaX = 0;
+    private int nDeltaY = 0;
 
 	// Constructor made private - static Utility class only
 	private CommandCenter() {}
@@ -185,7 +187,6 @@ public class CommandCenter {
         bLevelClear = bLevelClearStatus;
     }
 
-
 	public   long getScore() {
 		return lScore;
 	}
@@ -251,35 +252,40 @@ public class CommandCenter {
 		return movPlatform;
 	}
 
-    public int getMoveCountX() {
-        return nMoveCountX;
-    }
+    public int getMoveCountX() { return nMoveCountX; }
+    public int getMoveCountY(){ return nMoveCountY;}
 
     public void setMoveCountX(int nMoveCount) {
         this.nMoveCountX = nMoveCount;
+    }
+    public void setMoveCountY(int nMoveCount) {
+        this.nMoveCountY = nMoveCount;
     }
 
     public void decrMoveCountX() {
         nMoveCountX--;
     }
+    public void decrMoveCountY() {
+        nMoveCountY++;
+    }
 
     public int getDeltaX() {
         return nDeltaX;
     }
+    public int getDeltaY() { return nDeltaY; }
 
     public void setDeltaX(int nDeltaX) {
         this.nDeltaX = nDeltaX;
     }
+    public void setDeltaY(int nDeltaY) { this.nDeltaY = nDeltaY; }
 
     public void setGroundFirst(Ground ground) { groundFirst = ground;}
-
     public void setGroundLast (Ground ground) {
         groundLast = ground;
     }
     public Ground getGroundFirst() {
         return groundFirst;
     }
-
     public Ground getGroundLast() {
         return groundLast;
     }

@@ -7,7 +7,7 @@ public class Enemy1 extends Sprite {
 
 
     private final int HORIZONTAL_SPEED = 0;
-    private final int VERTICAL_SPEED = 4;
+    private final int VERTICAL_SPEED = 5;
     private int adjustWidth = 50;
     private boolean bDead;
 
@@ -17,13 +17,15 @@ public class Enemy1 extends Sprite {
     private int nWorthY = 0;
 
 
-    private Image imgEnemy = getScaledImage(new ImageIcon(Sprite.strImageDir + "foe1.png").getImage(), adjustWidth, adjustWidth);
+    private Image imgEnemy= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe1.png").getImage(), adjustWidth, adjustWidth);
     private Image imgEnemyExploded = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode.gif").getImage(), adjustWidth, adjustWidth);
 
     public Enemy1(int nCenterX, int nCenterY) {
         super(nCenterX, nCenterY);
         setTeam(Team.FOE);
         setCenter(new Point(nCenterX, nCenterY));
+        setDeltaY(VERTICAL_SPEED);
+        setRadius(16);
         setHeight(32);
         setWidth(32);
         bDead = false;
@@ -31,21 +33,25 @@ public class Enemy1 extends Sprite {
 
     @Override
     public void draw(Graphics g) {
+        setImage();
         Graphics2D g2d = (Graphics2D)g;
-        g2d.drawImage(imgEnemy, getCenter().x,getCenter().y,null);
+        g2d.drawImage(imgEnemy, getCenter().x, getCenter().y,null);
 
-        /*if (bDead) {
-            g2d.drawString(String.format("%03d",WORTH), getCenter().x,nWorthY);
-        }*/
+        if (bDead) {
+            //g2d.drawString(String.format("%03d",WORTH), getCenter().x,nWorthY);
+        }
     }
 
     @Override
     public void move() {
         setImage();
+        super.move();
         if (!bDead) {
-            super.move();
-            setCenter(new Point(getCenter().x + getDeltaX(), getCenter().y));
+
+            setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
+            //setDownDirection();
         } else {
+            //setCenter(new Point(getCenter().x , getCenter().y ));
             nWorthY+= nWorthDeltaY;
         }
     }
@@ -64,8 +70,10 @@ public class Enemy1 extends Sprite {
     @Override
     public void setDead() {
         bDead = true;
-        nDeadTimeLeft = 10;
+        setRadius(0);
+        nDeadTimeLeft = 2;
         nWorthY = getCenter().y;
+
     }
 
     @Override
@@ -73,10 +81,10 @@ public class Enemy1 extends Sprite {
 
     private void setImage() {
         if (bDead) {
+            //System.out.println("I'm in ehre");
             imgEnemy= imgEnemyExploded;
-            if (nDeadTimeLeft == 10) {
-                //what is nDeadTimeLeft do?
-                setCenter(new Point(getCenter().x, getCenter().y + 16));
+            if (nDeadTimeLeft == 2) {
+                setCenter(new Point(getCenter().x, getCenter().y ));
             }
             nDeadTimeLeft--;
         }

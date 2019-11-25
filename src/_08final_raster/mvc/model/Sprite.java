@@ -19,11 +19,13 @@ public abstract class Sprite implements Movable {
 	//we need to know what team we're on
 	private Team mTeam;
 
-
     // Default worth is zero.
     private final int WORTH = 0;
 
-    // Height and width of the sprite
+    private int nExpiry; //natural mortality (short-living objects)
+
+    // Radius, Height and width of the sprite
+    private int nRadius;
 	private int nHeight;
 	private int nWidth;
 
@@ -48,6 +50,7 @@ public abstract class Sprite implements Movable {
         setCenter(new Point(nCenterX,nCenterY));
         bDead = false;
     }
+    public void setExpire(int n) { nExpiry = n; }
 
 
 	@Override
@@ -62,9 +65,13 @@ public abstract class Sprite implements Movable {
     // This move method is primarily used by non-moving objects like platform when the screen moves
     // Other moving objects override to implement their own logic but also call this method
     public void move(){
+        if (CommandCenter.getInstance().getMoveCountY() != 0) {
+            pntCenter.y+= CommandCenter.getInstance().getDeltaY();
+        }
         if (CommandCenter.getInstance().getMoveCountX() != 0) {
             pntCenter.x+= CommandCenter.getInstance().getDeltaX();
         }
+
     }
 
     // Set initial position for this sprite to be used when Mario is respawned in the current level
@@ -74,72 +81,66 @@ public abstract class Sprite implements Movable {
     }
 
 
-	public void setDeltaX(int nSet) {
+    //setter methods
+    public void setCenter(Point pntParam) {
+        pntCenter = pntParam;
+    }
+    public void setDeltaX(int nSet) {
 		nDeltaX = nSet;
 	}
-
-	public void setDeltaY(int nSet) {
-		nDeltaY = nSet;
-	}
-
-	public int getDeltaY() {
-		return nDeltaY;
-	}
-
-	public int getDeltaX() {
-		return nDeltaX;
-	}
-
-
-	public Point getCenter() {
-		return pntCenter;
-	}
-
-	public void setCenter(Point pntParam) {
-		pntCenter = pntParam;
-	}
-
-	@Override
-    public void draw(Graphics g) {
-    }
-
+	public void setDeltaY(int nSet) { nDeltaY = nSet; }
+	public void setRadius(int nRadius){this.nRadius = nRadius;}
     public void setHeight(int nHeight) {
         this.nHeight = nHeight;
     }
-
     public void setWidth(int nWidth) {
         this.nWidth = nWidth;
     }
 
-    public int getHeight() {
-        return nHeight;
-    }
-
-    public int getWidth() {
-        return nWidth;
-    }
-
-	public void setLeftDirection() { };
-	public void setRightDirection() { };
-	public void setUpDirection(){};
-	public void setDownDirection(){};
-
+    public void setLeftDirection() { };
+    public void setRightDirection() { };
+    public void setUpDirection(){};
+    public void setDownDirection(){};
     public void setDead() {
         this.bDead = true;
     };
 
-    public boolean isDead() {
-        return bDead;
+    //getter methods
+    public Point getCenter() {
+        return pntCenter;
     }
-
-
-    public int getDeadTimeLeft() {
-        return nDeadTimeLeft;
+	public int getDeltaY() {
+		return nDeltaY;
+	}
+	public int getDeltaX() {
+		return nDeltaX;
+	}
+	public int getRadius(){ return nRadius;}
+    public int getHeight() {
+        return nHeight;
+    }
+    public int getWidth() {
+        return nWidth;
     }
 
     public int getWorth() {
         return WORTH;
     }
+    public int getExpire() {
+        return nExpiry;
+    }
+    public int getDeadTimeLeft() {
+        return nDeadTimeLeft;
+    }
+
+	@Override
+    public void draw(Graphics g) {}
+
+    public boolean isDead() { return bDead; }
+
+
+
+
 
     Image getScaledImage(Image srcImg, int w, int h){
         //to resize background image.

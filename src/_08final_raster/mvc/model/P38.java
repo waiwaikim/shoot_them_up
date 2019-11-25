@@ -31,20 +31,21 @@ public class P38 extends Sprite {
 
 
     private int nDeltaY = -4;
-    public static final int DEFAULT_HORIZONTAL_SPEED = 6;
-    public static final int DEFAULT_VERTICAL_SPEED = 6;
-    public static final int DEFAULT_HORIZONTAL_STEPS = 6;
-    public static final int DEFAULT_VERTICAL_STEPS= 6;
+    public static final int DEFAULT_HORIZONTAL_SPEED = 9;
+    public static final int DEFAULT_VERTICAL_SPEED = 9;
+    public static final int DEFAULT_HORIZONTAL_STEPS = 9;
+    public static final int DEFAULT_VERTICAL_STEPS= 9;
 
     //need to change later for vertical movement
-    public static final int SCREEN_LEFT_LIMIT = 150;
-    public static final int SCREEN_RIGHT_LIMIT = 700;
+    public static final int SCREEN_LEFT_LIMIT = 10;
+    public static final int SCREEN_RIGHT_LIMIT = 650;
 
 
     public P38(int nCenterX, int nCenterY) {
         super(nCenterX, nCenterY);
         setTeam(Team.FRIEND);
         setCenter(new Point(nCenterX, nCenterY));
+        setRadius(25);
         setHeight(50);
         setWidth(50);
         imgP38 = P38_1;
@@ -92,6 +93,8 @@ public class P38 extends Sprite {
 
     public void moveRight(){ nMoveRightCount = DEFAULT_HORIZONTAL_STEPS; }
     public void moveLeft(){ nMoveLeftCount = DEFAULT_HORIZONTAL_STEPS; }
+    public void moveNotLeft(){ nMoveLeftCount = 0; }
+    public void moveNotRight(){ nMoveRightCount = 0; }
     public void moveUp(){ nMoveUpCount = DEFAULT_VERTICAL_STEPS; }
     public void moveDown(){ nMoveDownCount = DEFAULT_VERTICAL_STEPS; }
 
