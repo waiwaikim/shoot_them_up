@@ -21,7 +21,7 @@ import static java.awt.event.KeyEvent.VK_N;
 public class Game implements Runnable, KeyListener {
 
 	// FIELDS
-	public static final Dimension DIM = new Dimension(1020, 780); //the dimension of the game.
+	public static final Dimension DIM = new Dimension(700, 1000); //the dimension of the game.
 	private GamePanel gmpPanel;
 	public static Random R = new Random();
 	public final static int ANI_DELAY = 45; // milliseconds between screen
@@ -37,11 +37,14 @@ public class Game implements Runnable, KeyListener {
     private long lStartTime = System.currentTimeMillis();
 
 	private boolean bMuted = false;
-	private final int PAUSE = 80, // p key
+	private final int
+
+            PAUSE = 80, // p key
 			QUIT = 81, // q key
 			LEFT = 37, // rotate left; left arrow
+            UP = 38, // thrust; up arrow
 			RIGHT = 39, // rotate right; right arrow
-			UP = 38, // thrust; up arrow
+            DOWN = 40,
 			START = 83, // s key
 			FIRE = 32, // space key
 			MUTE = 77; // m-key mute
@@ -52,7 +55,7 @@ public class Game implements Runnable, KeyListener {
 
 		gmpPanel = new GamePanel(DIM);
 		gmpPanel.addKeyListener(this);
-		clpMusicBackground = Sound.clipForLoopFactory("Mario_background.wav");
+		clpMusicBackground = Sound.clipForLoopFactory("game_background.wav");
 	}
 
 	public static void main(String args[]) {
@@ -144,97 +147,20 @@ public class Game implements Runnable, KeyListener {
 	private void drawBackGround() {
 
         Ground ground;
+        Water water;
 
-        switch (CommandCenter.getInstance().getLevel()) {
-            case 1:
-                // Add ground blocks
-                ground = new Ground(0);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().setGroundFirst(ground);
+        //Add background
+        water = new Water(0, 600);
+        CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().setWaterFirst(water);
 
-                ground = new Ground(510);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
+        water = new Water(0, 200);
+        CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
 
-                ground = new Ground(1020);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
+        water = new Water(0, -200);
+        CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
 
-                ground = new Ground(1530);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
-
-                ground = new Ground(2040);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
-
-                CommandCenter.getInstance().setGroundLast(ground);
-
-                // Add pipe for entry
-                CommandCenter.getInstance().getOpsList().enqueue(new Pipe(200, 648), CollisionOp.Operation.ADD);
-
-                // Add bushes
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush2(300, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush1(650, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush1(800, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush1(1050, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush2(1220, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush1(1600, 680), CollisionOp.Operation.ADD);
-
-
-                // Add hills
-                CommandCenter.getInstance().getOpsList().enqueue(new Hill1(50, 674), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Hill2(750, 642), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Hill1(1380, 674), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Hill2(1750, 642), CollisionOp.Operation.ADD);
-
-                // Introduce cloud1 from right but from 20 pixels outside the screen
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud1(DIM.width + 20,200), CollisionOp.Operation.ADD);
-
-                // Introduce cloud2 from 1/3 pixels within the frame
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud2(_08final.mvc.controller.Game.DIM.width/3, 150), CollisionOp.Operation.ADD);
-
-                // Introduce cloud from the middle of the frame
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud3(_08final.mvc.controller.Game.DIM.width/2, 100), CollisionOp.Operation.ADD);
-
-                break;
-            case 2:
-                // Add ground blocks
-                ground = new Ground(0);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().setGroundFirst(ground);
-
-                ground = new Ground(510);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
-
-                ground = new Ground(1020);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
-
-                ground = new Ground(1530);
-                CommandCenter.getInstance().getOpsList().enqueue(ground, CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().setGroundLast(ground);
-
-
-                // Add pipe for entry
-                CommandCenter.getInstance().getOpsList().enqueue(new Pipe(200, 648), CollisionOp.Operation.ADD);
-
-                // Add bushes
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush1(650, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush2(400, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush1(1600, 680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Bush2(1420, 680), CollisionOp.Operation.ADD);
-
-                // Add hills
-                CommandCenter.getInstance().getOpsList().enqueue(new Hill1(50, 674), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Hill2(850, 642), CollisionOp.Operation.ADD);
-
-                // Introduce cloud1 from right but from 20 pixels outside the screen
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud1(DIM.width + 20,200), CollisionOp.Operation.ADD);
-
-                // Introduce cloud2 from 1/3 pixels within the frame
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud2(_08final.mvc.controller.Game.DIM.width/3, 150), CollisionOp.Operation.ADD);
-
-                // Introduce cloud from the middle of the frame
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud3(_08final.mvc.controller.Game.DIM.width/2, 100), CollisionOp.Operation.ADD);
-
-                break;
-        }
+        CommandCenter.getInstance().setWaterLast(water);
 
 	}
 
@@ -242,192 +168,13 @@ public class Game implements Runnable, KeyListener {
     // Method to draw the game level components
     private void drawLevelGame() {
         Flag flag;
-        switch (CommandCenter.getInstance().getLevel()) {
-            case 1:
-                // 1st set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(428,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(460,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(492,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(524,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(556,570), CollisionOp.Operation.ADD);
 
+        CommandCenter.getInstance().getOpsList().enqueue(new Brick(428,570), CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(new Brick(460,570), CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(new Brick(492,570), CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(new Brick(524,570), CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(new Brick(556,570), CollisionOp.Operation.ADD);
 
-                // 1.5 set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(630,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(662,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(694,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(726,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(746,470), CollisionOp.Operation.ADD);
-
-
-                // 2nd set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(828,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(860,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(892,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(924,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(956,570), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(436,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(468,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(500,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(532,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(564,532), CollisionOp.Operation.ADD);
-
-                // Add Question block
-                CommandCenter.getInstance().getOpsList().enqueue(new QuestionBlock(694,300), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(836,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(868,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(900,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(932,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(964,532), CollisionOp.Operation.ADD);
-
-
-                // Add Independent coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1100,500), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1100,540), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1100,580), CollisionOp.Operation.ADD);
-
-
-                // 3rd set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1396,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1428,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1460,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1492,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1524,570), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1432,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1468,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1500,532), CollisionOp.Operation.ADD);
-
-                // 4th set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1608,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1640,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1672,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1704,470), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1736,470), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1648,432), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1680,432), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1712,432), CollisionOp.Operation.ADD);
-
-                // 5th set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1808,370), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1840,370), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1872,370), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1904,370), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1936,370), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(1968,370), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1880,338), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(1912,338), CollisionOp.Operation.ADD);
-
-                // Add flag pole components
-                flag = new Flag(2080,280);
-                CommandCenter.getInstance().getOpsList().enqueue(flag, CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().setFlag(flag);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(2100,680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new FlagPole(2116,280), CollisionOp.Operation.ADD);
-
-
-                break;
-
-            case 2:
-                // 1st set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(328,320), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(360,320), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(392,320), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(424,320), CollisionOp.Operation.ADD);
-
-                // 2nd set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(678,320), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(710,320), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(742,320), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(774,320), CollisionOp.Operation.ADD);
-
-                // 3rd set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(504,450), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(536,450), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(568,450), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(600,450), CollisionOp.Operation.ADD);
-
-                // Add Piranha plant
-                CommandCenter.getInstance().getOpsList().enqueue(new PiranhaPlant(552,404), CollisionOp.Operation.ADD);
-
-                // 4th set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(328,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(360,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(392,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(424,570), CollisionOp.Operation.ADD);
-
-                // 5th set of bricks
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(678,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(710,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(742,570), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Brick(774,570), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(336,258), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(368,258), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(400,258), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(432,258), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(686,258), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(718,258), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(750,258), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(782,258), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(336,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(368,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(400,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(432,532), CollisionOp.Operation.ADD);
-
-                // Add coins
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(686,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(718,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(750,532), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Coin(782,532), CollisionOp.Operation.ADD);
-
-                //Add platform to climb to flag
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1372,680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1404,648), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1404,680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1436,616), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1436,648), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1436,680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1468,584), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1468,616), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1468,648), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1468,680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1500,552), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1500,584), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1500,616), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1500,648), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1500,680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1532,520), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1532,552), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1532,584), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1532,616), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1532,648), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1532,680), CollisionOp.Operation.ADD);
-
-                // Add flag pole components
-                flag = new Flag(1575,280);
-                CommandCenter.getInstance().getOpsList().enqueue(flag, CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().setFlag(flag);
-                CommandCenter.getInstance().getOpsList().enqueue(new Block(1595,680), CollisionOp.Operation.ADD);
-                CommandCenter.getInstance().getOpsList().enqueue(new FlagPole(1611,280), CollisionOp.Operation.ADD);
-
-
-                break;
-        }
     }
 
     // Method to check gravity of Mario
@@ -655,9 +402,9 @@ public class Game implements Runnable, KeyListener {
         if (CommandCenter.getInstance().getLevel() != 0) {
             if (getTick() % (GOOMBA_INTRO_INTERVAL /ANI_DELAY/ CommandCenter.getInstance().getLevel()) == 0
                     && CommandCenter.getInstance().getMovFoes().size() < CommandCenter.getInstance().getLevel() * FOE_LEVEL_MULTIPLIER) {
-                CommandCenter.getInstance().spawnGoombas();
+                CommandCenter.getInstance().spawnEnemy1();
             }
-
+/*
             if (getTick() % (KOOPA_INTRO_INTERVAL /ANI_DELAY/ CommandCenter.getInstance().getLevel()) == 0
                     && CommandCenter.getInstance().getMovFoes().size() < CommandCenter.getInstance().getLevel() * FOE_LEVEL_MULTIPLIER){
                 CommandCenter.getInstance().spawnKoopas();
@@ -667,6 +414,7 @@ public class Game implements Runnable, KeyListener {
                     && CommandCenter.getInstance().getMovFoes().size() < CommandCenter.getInstance().getLevel() * FOE_LEVEL_MULTIPLIER){
                 CommandCenter.getInstance().spawnParatroopas();
             }
+  */
         }
     }
 
@@ -727,14 +475,17 @@ public class Game implements Runnable, KeyListener {
 
 	// Called when user presses 's'
 	private void startGame() {
-		clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
+		//clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
 		CommandCenter.getInstance().clearAll();
 		CommandCenter.getInstance().initGame();
 		CommandCenter.getInstance().setPlaying(true);
 		CommandCenter.getInstance().setPaused(false);
 		drawBackGround();
         drawLevelGame();
-        CommandCenter.getInstance().spawnMario(true);
+        CommandCenter.getInstance().spawnP38(true);
+        //CommandCenter.getInstance().spawnMario(true);
+
+
 	}
 
 
@@ -747,13 +498,15 @@ public class Game implements Runnable, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		Mario mario = CommandCenter.getInstance().getMario();
-		int nKey = e.getKeyCode();
+		//Mario mario = CommandCenter.getInstance().getMario();
+        P38 p38 =  CommandCenter.getInstance().getP38();
+
+        int nKey = e.getKeyCode();
 
 		if (nKey == START && !CommandCenter.getInstance().isPlaying())
 			startGame();
 
-		if (mario != null) {
+		if (p38 != null) {
 			switch (nKey) {
 			case PAUSE:
 				CommandCenter.getInstance().setPaused(!CommandCenter.getInstance().isPaused());
@@ -765,26 +518,25 @@ public class Game implements Runnable, KeyListener {
 			case QUIT:
 				System.exit(0);
 				break;
-            case UP:
-                CommandCenter.getInstance().getMario().jump();
-                break;
             case RIGHT:
-                if (!CommandCenter.getInstance().getMario().isDead()) {
+                if (!CommandCenter.getInstance().getP38().isDead()) {
                     moveRight();
                 }
                 break;
             case LEFT:
-                if (!CommandCenter.getInstance().getMario().isDead()) {
+                if (!CommandCenter.getInstance().getP38().isDead()) {
                     moveLeft();
                 }
                 break;
-            // Cheat key to jump to next level
-            case VK_N:
-                stopLoopingSounds(clpMusicBackground);
-                CommandCenter.getInstance().getMario().setCenter(new Point(
-                        CommandCenter.getInstance().getFlag().getCenter().x -26,
-                        CommandCenter.getInstance().getFlag().getCenter().y
-                ));
+            case UP:
+                if (!CommandCenter.getInstance().getP38().isDead()) {
+                    moveUp();
+                }
+                break;
+            case DOWN:
+                if (!CommandCenter.getInstance().getP38().isDead()) {
+                    moveDown();
+                }
                 break;
 			default:
 				break;
@@ -794,10 +546,11 @@ public class Game implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		Mario mario = CommandCenter.getInstance().getMario();
+		//Mario mario = CommandCenter.getInstance().getMario();
+		P38 p38 = CommandCenter.getInstance().getP38();
 		int nKey = e.getKeyCode();
 
-		if (mario != null) {
+		if (p38 != null) {
 			switch (nKey) {
 
 			case MUTE:
@@ -831,31 +584,54 @@ public class Game implements Runnable, KeyListener {
 
     // Method to move right when the right arrow key is pressed. If Mario is beyond his screen limit, move everything else to left
     private void moveRight() {
+        if (CommandCenter.getInstance().getP38().getCenter().getX() > P38.SCREEN_RIGHT_LIMIT) {
+            moveEverythingLeft();
+        } else {
+            CommandCenter.getInstance().getP38().moveRight();
+        }
+    }
+
+    /*private void moveRight() {
         if (CommandCenter.getInstance().getMario().getCenter().getX() > Mario.SCREEN_RIGHT_LIMIT) {
             moveEverythingLeft();
         } else {
             CommandCenter.getInstance().getMario().moveRight();
         }
-    }
+    }*/
 
     // Similar to moveRight method but this is for moving left.
     private void moveLeft() {
-        if (CommandCenter.getInstance().getMario().getCenter().getX() < Mario.SCREEN_LEFT_LIMIT) {
+        if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
             moveEverythingRight();
         } else {
-            CommandCenter.getInstance().getMario().moveLeft();
+            CommandCenter.getInstance().getP38().moveLeft();
+        }
+    }
+    private void moveUp() {
+        if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
+            /*----------------------- NEED TO UPDATE -----------------------*/
+            moveEverythingRight();
+        } else {
+            CommandCenter.getInstance().getP38().moveUp();
+        }
+    }
+    private void moveDown() {
+        if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
+            /*----------------------- NEED TO UPDATE -----------------------*/
+            moveEverythingRight();
+        } else {
+            CommandCenter.getInstance().getP38().moveDown();
         }
     }
 
-
     private void moveEverythingLeft() {
-        CommandCenter.getInstance().setMoveCountX(Mario.DEFAULT_HORIZONTAL_STEPS);
-        CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getMario().getDeltaMoveRightX());
+        //CommandCenter.getInstance().setMoveCountX(Mario.DEFAULT_HORIZONTAL_STEPS);
+        //CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getMario().getDeltaMoveRightX());
     }
 
     private void moveEverythingRight() {
-        CommandCenter.getInstance().setMoveCountX(Mario.DEFAULT_HORIZONTAL_STEPS);
-        CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getMario().getDeltaMoveLeftX());
+        //CommandCenter.getInstance().setMoveCountX(Mario.DEFAULT_HORIZONTAL_STEPS);
+        //CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getMario().getDeltaMoveLeftX());
     }
 
 

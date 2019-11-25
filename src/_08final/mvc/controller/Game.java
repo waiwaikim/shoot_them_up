@@ -124,8 +124,7 @@ public class Game implements Runnable, KeyListener {
 				// between frames takes longer than ANI_DELAY, then the difference between lStartTime - 
 				// System.currentTimeMillis() will be negative, then zero will be the sleep time
 				lStartTime += ANI_DELAY;
-				Thread.sleep(Math.max(0,
-						lStartTime - System.currentTimeMillis()));
+				Thread.sleep(Math.max(0, lStartTime - System.currentTimeMillis()));
 			} catch (InterruptedException e) {
 				// just skip this frame -- no big deal
 				continue;

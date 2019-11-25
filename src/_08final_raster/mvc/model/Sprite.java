@@ -4,6 +4,7 @@ import _08final_raster.mvc.model.CommandCenter;
 import _08final_raster.mvc.model.Movable;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public abstract class Sprite implements Movable {
@@ -118,12 +119,10 @@ public abstract class Sprite implements Movable {
         return nWidth;
     }
 
-	public void setLeftDirection() {
-
-	};
-	public void setRightDirection() {
-
-	};
+	public void setLeftDirection() { };
+	public void setRightDirection() { };
+	public void setUpDirection(){};
+	public void setDownDirection(){};
 
     public void setDead() {
         this.bDead = true;
@@ -140,6 +139,18 @@ public abstract class Sprite implements Movable {
 
     public int getWorth() {
         return WORTH;
+    }
+
+    Image getScaledImage(Image srcImg, int w, int h){
+        //to resize background image.
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
     }
 
 }

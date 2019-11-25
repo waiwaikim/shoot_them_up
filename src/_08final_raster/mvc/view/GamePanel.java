@@ -10,6 +10,7 @@ import _08final_raster.sounds.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class GamePanel extends Panel {
 
 	// FIELDS
+    // The following "off" vars are used for the off-screen double-bufferred image.
 	private Dimension dimOff;
 	private Image imgOff;
 	private Graphics grpOff;
@@ -26,7 +28,7 @@ public class GamePanel extends Panel {
 	private Font fntBig = new Font("SansSerif", Font.BOLD, 28);
     private Font customFont;
     private Coin coinScore = new Coin(220,22);
-    private Image imgMarioLife = new ImageIcon(Sprite.strImageDir + "Mario_Lives.gif").getImage();
+    private Image imgP38Life = new ImageIcon(Sprite.strImageDir + "P38_Lives.png").getImage();
 	private FontMetrics fmt;
 	private int nFontWidth;
 	private int nFontHeight;
@@ -42,7 +44,7 @@ public class GamePanel extends Panel {
 		initView();
 
 		gmf.setSize(dim);
-		gmf.setTitle("Super Mario Bros.");
+		gmf.setTitle("1941 Counter Attack");
 		gmf.setResizable(false);
 		gmf.setVisible(true);
 		this.setFocusable(true);
@@ -56,31 +58,29 @@ public class GamePanel extends Panel {
 		g2D.setColor(Color.white);
         g2D.setFont(customFont);
 
-        // Draw Mario's total score
-		g2D.drawString("MARIO", nFontWidth + 30, nFontHeight + 20);
+        // Player's current score
+		g2D.drawString("SCORE", nFontWidth + 30, nFontHeight + 20);
         strDisplay = String.format("%05d", CommandCenter.getInstance().getScore());
 		g2D.drawString(strDisplay, nFontWidth + 33, nFontHeight + 45);
 
-        // Draw coin score
-        coinScore.draw(g2D);
-        strDisplay = "x" + String.format("%03d", CommandCenter.getInstance().getCoins());
-        g2D.drawString(strDisplay, 245, 47);
-
-        // Draw level
-        g2D.drawString("WORLD ", 450, nFontHeight + 20);
+        // Highest score achieved
+        g2D.drawString("HI-SCORE", 230, nFontHeight + 20);
         strDisplay = String.format("%01d", CommandCenter.getInstance().getLevel());
-        g2D.drawString(strDisplay, 570, nFontHeight + 20);
+        g2D.drawString(strDisplay, 295, nFontHeight + 45);
+
+        //lives left - energy
+        //feature to implement later: show lives as images / energy bar per vital
+        g2D.drawString("VITAL", 490, nFontHeight + 20);
+        g2D.drawImage(imgP38Life,490,nFontHeight + 30,null);
+        strDisplay = "x" + String.format("%02d", CommandCenter.getInstance().getNumMarios());
+        g2D.drawString(strDisplay, 520,nFontHeight + 45);
+
+        // Draw coin score
+        //coinScore.draw(g2D);
+        //strDisplay = "x" + String.format("%03d", CommandCenter.getInstance().getCoins());
+        //g2D.drawString(strDisplay, 245, 47);
 
         // Draw time left
-        g2D.drawString("TIME", 700, nFontHeight + 20);
-        strDisplay = String.format("%03d", CommandCenter.getInstance().getGameTimeLeft());
-        g2D.drawString(strDisplay, 710, nFontHeight + 45);
-
-        // Draw Mario's lives left
-        g2D.drawImage(imgMarioLife,890,22,null);
-        strDisplay = "x" + String.format("%02d", CommandCenter.getInstance().getNumMarios());
-        g2D.drawString(strDisplay, 920,47);
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -93,12 +93,14 @@ public class GamePanel extends Panel {
 		}
 
 		// Fill in background with Mario blue.
-		grpOff.setColor(new Color(73, 144, 240));
+		//.setColor(new Color(0, 98, 157));
+        grpOff.setColor(Color.black);
 		grpOff.fillRect(0, 0, Game.DIM.width, Game.DIM.height);
 
 		if (!CommandCenter.getInstance().isPlaying() && !CommandCenter.getInstance().isGameOver()) {
             displayTextOnScreen(grpOff);
         } else if (CommandCenter.getInstance().isGameOver()) {
+
             grpOff.setColor(Color.white);
             grpOff.setFont(customFont);
             strDisplay = "GAME OVER"; // Manual alignment of 40 pixels to keep text in center
@@ -109,15 +111,19 @@ public class GamePanel extends Panel {
                 Sound.playSound("Game_over.wav");
                 bPlayGameOverSound = false;
             }
+
 		} else if (CommandCenter.getInstance().isPaused()) {
-            Image imgBanner = new ImageIcon(Sprite.strImageDir + "mario_banner.jpg").getImage();
-            grpOff.drawImage(imgBanner,320,40,null);
+
+            Image rawPause = new ImageIcon(Sprite.strImageDir + "game_pause.png").getImage();
+            Image resizedPause = getScaledImage(rawPause, dimOff.width, dimOff.height);
+            grpOff.drawImage(resizedPause,0,0,null);
 			strDisplay = "GAME PAUSED";
             grpOff.setColor(Color.white);
             grpOff.setFont(customFont); // Manual alignment of 40 pixels to keep text in center
             grpOff.drawString(strDisplay,(Game.DIM.width - fmt.stringWidth(strDisplay))/2 - 50, Game.DIM.height / 2);
 		}
 		else {
+		    //plyaing and not paushed!
             // Update game timer
             if (CommandCenter.getInstance().getMario() != null && !CommandCenter.getInstance().getMario().isDead()) {
                 CommandCenter.getInstance().updateTimeLeft();
@@ -177,43 +183,53 @@ public class GamePanel extends Panel {
 		nFontHeight = fmt.getHeight();
 		g.setFont(fntBig);					// set font info
 	}
+    private Image getScaledImage(Image srcImg, int w, int h){
+	    //to resize background image.
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
 
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
 	// This method draws some text to the middle of the screen before/after a game
 	private void displayTextOnScreen(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
+        Image rawBackground = new ImageIcon(Sprite.strImageDir + "Front_Background.png").getImage();
+        Image resizedBackground = getScaledImage(rawBackground, 700, 1000);
+        g2d.drawImage(resizedBackground,0,0,null);
 
-        Image imgBackground = new ImageIcon(Sprite.strImageDir + "Front_Background.jpg").getImage();
-        g2d.drawImage(imgBackground,0,0,null);
-
-        Image imgBanner = new ImageIcon(Sprite.strImageDir + "mario_banner.jpg").getImage();
-        g2d.drawImage(imgBanner,320,40,null);
+        //Image imgBanner = new ImageIcon(Sprite.strImageDir + "mario_banner.jpg").getImage();
+        //g2d.drawImage(imgBanner,320,40,null);
 
         g.setColor(Color.white);
         g.setFont(customFont);
 
         strDisplay = "KEY CONTROLS";
         grpOff.drawString(strDisplay,
-                (Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 4
+                (Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 2
                         + nFontHeight + 160);
 
 		strDisplay = "S : START";
 		grpOff.drawString(strDisplay,
-				(Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 4
+				(Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 2
 						+ nFontHeight + 200);
 
 		strDisplay = "P : PAUSE";
 		grpOff.drawString(strDisplay,
-				(Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 4
+				(Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 2
 						+ nFontHeight + 230);
 
         strDisplay = "Q : QUIT    ";
         grpOff.drawString(strDisplay,
-                (Game.DIM.width)/2 - fmt.stringWidth(strDisplay) + 2, Game.DIM.height / 4 // Manual offset to ensure the semi-colons align
+                (Game.DIM.width)/2 - fmt.stringWidth(strDisplay) + 2, Game.DIM.height / 2 // Manual offset to ensure the semi-colons align
                         + nFontHeight + 260);
 
         strDisplay = "ARROW KEYS TO MOVE";
         grpOff.drawString(strDisplay,
-                (Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 4
+                (Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 2
                         + nFontHeight + 290);
 
 	}

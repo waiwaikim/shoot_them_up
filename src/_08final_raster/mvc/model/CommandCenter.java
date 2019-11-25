@@ -12,10 +12,13 @@ import java.util.List;
 
 public class CommandCenter {
 
+    private int nNumP38s;
+    private P38 p38;
 	private  int nNumMario;
 	private  int nLevel;
 	private  long lScore;
 	private  int nCoins;
+
 	private  Mario mario;
     private  Flag flag;
 	private  boolean bPlaying;
@@ -27,6 +30,8 @@ public class CommandCenter {
     private Point pntFlagCenterTracker;
 
     private Ground groundFirst, groundLast;
+
+    private Water waterFirst, waterLast;
 	
 	// These ArrayLists with capacities set
 	private List<Movable> movPlatform = new ArrayList<Movable>(300);
@@ -54,8 +59,9 @@ public class CommandCenter {
 	public  void initGame(){
 		setLevel(1);
 		setScore(0);
-        setCoins(0);
+        //setCoins(0);
 		setNumMarios(5);
+		setnNumP38s(5);
         nSecondsLeft = 300;
         lSysTimeSeconds = System.currentTimeMillis()/1000;
 	}
@@ -74,9 +80,19 @@ public class CommandCenter {
                 setInitPosFlag(true);
                 setNumMarios(getNumMarios() - 1);
             }
-
 		}
 	}
+    // The parameter is true if this is for the beginning of the game, otherwise false
+    public  void spawnP38(boolean bFirst) {
+        if (getNumP38s() != 0) {
+            p38 = new P38(350,700);
+            opsList.enqueue(p38, CollisionOp.Operation.ADD);
+            if (!bFirst) {
+                setInitPosFlag(true);
+                setNumMarios(getNumP38s() - 1);
+            }
+        }
+    }
 
 	public void spawnGoombas()  {
         switch (nLevel) {
@@ -88,7 +104,9 @@ public class CommandCenter {
                 break;
         }
     }
-
+    public void spawnEnemy1()  {
+        opsList.enqueue(new Enemy1(200,100), CollisionOp.Operation.ADD);
+    }
     public void spawnKoopas()  {
         switch (nLevel) {
             case 1:
@@ -199,14 +217,19 @@ public class CommandCenter {
 	public  int getNumMarios() {
 		return nNumMario;
 	}
-
+    public  int getNumP38s() {
+        return nNumP38s;
+    }
 	public  void setNumMarios(int nParam) {
 		nNumMario = nParam;
 	}
-
+    public  void setnNumP38s(int nParam) {
+        nNumP38s = nParam;
+    }
 	public  Mario getMario(){
 		return mario;
 	}
+    public P38 getP38(){return p38;}
 
 	public  void setMario(Mario marioParam){
 		mario = marioParam;
@@ -248,20 +271,29 @@ public class CommandCenter {
         this.nDeltaX = nDeltaX;
     }
 
-    public void setGroundFirst(Ground ground) {
-        groundFirst = ground;
-    }
+    public void setGroundFirst(Ground ground) { groundFirst = ground;}
 
     public void setGroundLast (Ground ground) {
         groundLast = ground;
     }
-
     public Ground getGroundFirst() {
         return groundFirst;
     }
 
     public Ground getGroundLast() {
         return groundLast;
+    }
+
+    //water
+    public void setWaterFirst(Water water) { waterFirst = water;}
+    public void setWaterLast (Water water) {
+        waterLast = water;
+    }
+    public Water getWaterFirst() {
+        return waterFirst;
+    }
+    public Water getWaterLast() {
+        return waterLast;
     }
 
     public int getGameTimeLeft() {

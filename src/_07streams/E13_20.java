@@ -11,12 +11,13 @@ public class E13_20 {
 
     public static void main(String[] args) {
 
+        System.out.println("dkfjldafnlkdanfl");
         ArrayList<Integer> bills = new ArrayList<Integer>();
         bills.add(1);
         bills.add(5);
         bills.add(20);
         bills.add(100);
-        int targetPrice = 63;
+        int targetPrice = 1230;
 
         ArrayList<ArrayList<Integer>> answer = find_changes(targetPrice, bills);
         for(ArrayList<Integer> option :answer ){
