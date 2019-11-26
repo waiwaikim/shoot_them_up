@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Bullet1 extends Sprite {
 
-    private final int FIRE_POWER = 100;
+    private int FIRE_POWER = 0;
     private int adjustWidth = 15;
     private final int VERTICAL_SPEED = -15;
     private Image imgBullet1= getScaledImage(new ImageIcon(Sprite.strImageDir + "weapon_1.png").getImage(), adjustWidth, adjustWidth);
@@ -14,6 +14,7 @@ public class Bullet1 extends Sprite {
         super(p38.getCenter().x, p38.getCenter().y);
         setTeam(Team.FRIEND);
 
+        FIRE_POWER = 100;
         setExpire(40);
         setRadius(10);
         setHeight(5);
@@ -42,4 +43,6 @@ public class Bullet1 extends Sprite {
             setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
     }
 
+    public void setFirePower(int nPower){ FIRE_POWER = nPower; }
+    public int getFirePower(){ return FIRE_POWER;}
 }

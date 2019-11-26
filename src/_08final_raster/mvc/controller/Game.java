@@ -31,7 +31,9 @@ public class Game implements Runnable, KeyListener {
 	private Thread thrAnim;
 	private int nTick = 0;
     private final int FOE_LEVEL_MULTIPLIER = 4; //Number of foes active based on level.
+
     private final int GOOMBA_INTRO_INTERVAL = 4500; // Milliseconds
+    private final int SHIP_INTRO_INTERVAL = 8000;
     private final int KOOPA_INTRO_INTERVAL = 12000; // Milliseconds
     private final int PARATROOPA_INTRO_INTERVAL = 12000; // Milliseconds
     private long lStartTime = System.currentTimeMillis();
@@ -148,6 +150,7 @@ public class Game implements Runnable, KeyListener {
 
         Ground ground;
         Water water;
+        Score score;
 
         //Add background
         water = new Water(0, 600);
@@ -158,12 +161,13 @@ public class Game implements Runnable, KeyListener {
         CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
 
         water = new Water(0, -200);
-        //CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
 
         CommandCenter.getInstance().setWaterLast(water);
 
         CommandCenter.getInstance().getOpsList().enqueue(new Island(DIM.width- 400,-400), CollisionOp.Operation.ADD);
-
+        score = new Score(0, 0);
+        CommandCenter.getInstance().getOpsList().enqueue(score, CollisionOp.Operation.ADD);
 
     }
 
@@ -272,13 +276,10 @@ public class Game implements Runnable, KeyListener {
                     }
                     else{
                         //when bullet hits a foe
-                        Sound.playSound("kapow.wav");
-                        movFoe.setDead();
-                        CommandCenter.getInstance().addScore(movFoe.getWorth());
+                        killFoe(movFriend, movFoe);
+
                     }
 
-                    CommandCenter.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
-                    CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 
                     //if(movFoe.isDead() && movFoe.getDeadTimeLeft() == 0 ){
                     //to add
@@ -453,6 +454,11 @@ public class Game implements Runnable, KeyListener {
             if (getTick() % (GOOMBA_INTRO_INTERVAL /ANI_DELAY/ CommandCenter.getInstance().getLevel()) == 0
                     && CommandCenter.getInstance().getMovFoes().size() < CommandCenter.getInstance().getLevel() * FOE_LEVEL_MULTIPLIER) {
                 CommandCenter.getInstance().spawnEnemy1();
+                CommandCenter.getInstance().spawnShip();
+            }
+            if (getTick() % (SHIP_INTRO_INTERVAL /ANI_DELAY/ CommandCenter.getInstance().getLevel()) == 0
+                    && CommandCenter.getInstance().getMovFoes().size() < CommandCenter.getInstance().getLevel() * FOE_LEVEL_MULTIPLIER) {
+                CommandCenter.getInstance().spawnShip();
             }
         /*
             if (getTick() % (KOOPA_INTRO_INTERVAL /ANI_DELAY/ CommandCenter.getInstance().getLevel()) == 0
@@ -467,6 +473,39 @@ public class Game implements Runnable, KeyListener {
         */
         }
     }
+
+    private void killFoe(Movable myFriend, Movable movFoe) {
+        //when a bullet hits a foe
+        Bullet1 thisBullet = (Bullet1) myFriend;
+
+		if (movFoe instanceof Enemy1){
+		    //when the foe is a baby fighter jet
+            Sound.playSound("kapow.wav");
+            movFoe.setDead();
+            CommandCenter.getInstance().addScore(movFoe.getWorth());
+            CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
+            CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+
+		}
+		else if(movFoe instanceof Ship){
+		    //when the foe is a boss ship
+		    Ship thisShip = (Ship) movFoe;
+            if(thisShip.getEnergy() ==0){
+                //when the ship is destroyed
+                //Sound.playSound("big explosion/destruction sound" );
+                thisShip.setDead();
+                CommandCenter.getInstance().addScore(thisShip.getWorth());
+                CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
+                CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+            }
+            else {
+                Sound.playSound("Mario_Block.wav");
+                CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
+                thisShip.setEnergy(thisBullet.getFirePower());
+            }
+        }
+
+	}
 
     private void processQueue() {
 
@@ -535,9 +574,7 @@ public class Game implements Runnable, KeyListener {
         drawLevelGame();
         CommandCenter.getInstance().spawnP38(true);
         //CommandCenter.getInstance().spawnMario(true);
-
-
-	}
+    }
 
 
     // Varargs for stopping looping-music-clips
@@ -712,6 +749,7 @@ public class Game implements Runnable, KeyListener {
             CommandCenter.getInstance().setCoins(0);
             drawBackGround();
             drawLevelGame();
+
             CommandCenter.getInstance().spawnMario(true);
             CommandCenter.getInstance().setTimeLeft(300);
 

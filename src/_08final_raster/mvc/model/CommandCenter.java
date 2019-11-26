@@ -109,6 +109,9 @@ public class CommandCenter {
     public void spawnEnemy1()  {
         opsList.enqueue(new Enemy1(200,100), CollisionOp.Operation.ADD);
     }
+    public void spawnShip()  {
+        opsList.enqueue(new Ship(400,-100), CollisionOp.Operation.ADD);
+    }
     public void spawnKoopas()  {
         switch (nLevel) {
             case 1:

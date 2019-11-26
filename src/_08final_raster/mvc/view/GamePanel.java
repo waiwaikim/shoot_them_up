@@ -51,10 +51,12 @@ public class GamePanel extends Panel {
 	}
 
 	// METHODS
+    public Graphics getGrpOff(){
+	    return grpOff;
+    }
+	public void drawScore() {
 
-	private void drawScore(Graphics g) {
-
-        Graphics2D g2D = (Graphics2D) g;
+        Graphics2D g2D = (Graphics2D) grpOff;
 		g2D.setColor(Color.white);
         g2D.setFont(customFont);
 
@@ -64,9 +66,9 @@ public class GamePanel extends Panel {
 		g2D.drawString(strDisplay, nFontWidth + 33, nFontHeight + 45);
 
         // Highest score achieved
-        g2D.drawString("HI-SCORE", 230, nFontHeight + 20);
-        strDisplay = String.format("%01d", CommandCenter.getInstance().getLevel());
-        g2D.drawString(strDisplay, 295, nFontHeight + 45);
+        //g2D.drawString("HI-SCORE", 230, nFontHeight + 20);
+        //strDisplay = String.format("%01d", CommandCenter.getInstance().getLevel());
+        //g2D.drawString(strDisplay, 295, nFontHeight + 45);
 
         //lives left - energy
         //feature to implement later: show lives as images / energy bar per vital
@@ -129,7 +131,7 @@ public class GamePanel extends Panel {
                 CommandCenter.getInstance().updateTimeLeft();
             }
 
-            drawScore(grpOff);
+            //drawScore();
 
             // Control frame movement. Check if movement will cause first or last ground block to go out of screen bounds
             if (CommandCenter.getInstance().getMoveCountX() != 0
