@@ -7,7 +7,7 @@ public class Island extends Sprite {
 
 
     private int imgAdjust = 100;
-    private final int VERTICAL_SPEED = 3;
+    private final int VERTICAL_SPEED = 2;
     private int nCenterX;
     private int nCenterY;
 
@@ -35,7 +35,7 @@ public class Island extends Sprite {
         super(nCenterX, nCenterY);
         this.nCenterX = nCenterX;
         this.nCenterY = nCenterY;
-        setExpire(1000);
+        //setExpire(1000);
         setDeltaY(VERTICAL_SPEED);
         setTeam(Team.BACKGROUND);
         setCenter(new Point(nCenterX, nCenterY));
@@ -73,12 +73,14 @@ public class Island extends Sprite {
     @Override
     public void move() {
         super.move();
-        if (getExpire() == 0)
+        setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
+
+        /*if (getExpire() == 0)
             CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
         else{
             setExpire(getExpire() - 1);
             setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
-        }
+        }*/
     }
 
 }

@@ -37,7 +37,8 @@ public class CommandCenter {
 	private List<Movable> movPlatform = new ArrayList<Movable>(300);
 	private List<Movable> movFriends = new ArrayList<Movable>(100);
 	private List<Movable> movFoes = new ArrayList<>(200);
-	private List<Movable> movBackground = new ArrayList<>(50);
+	private List<Movable> movBackground = new ArrayList<>(100);
+	private List<Movable> movFloater = new ArrayList<>(100);
 
 	private GameOpsList opsList = new GameOpsList();
 
@@ -62,9 +63,9 @@ public class CommandCenter {
 		setLevel(1);
 		setScore(0);
         //setCoins(0);
-		setNumMarios(5);
-		setnNumP38s(5);
-        nSecondsLeft = 300;
+		//setNumMarios(5);
+		setNumP38s(5);
+        nSecondsLeft = 9000;
         lSysTimeSeconds = System.currentTimeMillis()/1000;
 	}
 
@@ -87,11 +88,21 @@ public class CommandCenter {
     // The parameter is true if this is for the beginning of the game, otherwise false
     public  void spawnP38(boolean bFirst) {
         if (getNumP38s() != 0) {
-            p38 = new P38(350,700);
-            opsList.enqueue(p38, CollisionOp.Operation.ADD);
-            if (!bFirst) {
+
+            if(bFirst){
+                p38 = new P38(350,700);
+                //the spawning location needs to be udpated for respawning; \
+                opsList.enqueue(p38, CollisionOp.Operation.ADD);
+            }
+            else{
+                //System.out.println(P38.nSpawnLoctionX +" "  + P38.nSpawnLoctionY);
+                p38 = new P38(P38.getSpawnLocationX(), P38.getnSpawnLoctionY()-150);
+                opsList.enqueue(p38, CollisionOp.Operation.ADD);
                 setInitPosFlag(true);
-                setNumMarios(getNumP38s() - 1);
+                setNumP38s(getNumP38s() - 1);
+            }
+
+            if (!bFirst) {
             }
         }
     }
@@ -109,9 +120,36 @@ public class CommandCenter {
     public void spawnEnemy1()  {
         opsList.enqueue(new Enemy1(200,100), CollisionOp.Operation.ADD);
     }
-    public void spawnShip()  {
-        opsList.enqueue(new Ship(400,-100), CollisionOp.Operation.ADD);
+    public void spawnEnemy2()  {
+        opsList.enqueue(new Enemy2(200,100), CollisionOp.Operation.ADD);
     }
+    public void spawnShip()  {
+
+	    int x = 400;
+	    int y = -200;
+
+	    //turrets bottom to top
+	    Turret turret1 = new Turret(x+4, y+183,2);
+	    Turret turret2 = new Turret(x+4, y+160,4);
+	    Turret turret3 = new Turret(x+4, y+135,3);
+	    Turret turret4 = new Turret(x+4, y+95, 2);
+	    Turret turret5 = new Turret(x+4, y+20,1);
+
+        opsList.enqueue(new Ship(x,y, turret1, turret2, turret3, turret4, turret5), CollisionOp.Operation.ADD);
+        opsList.enqueue(turret1, CollisionOp.Operation.ADD);
+        opsList.enqueue(turret2, CollisionOp.Operation.ADD);
+        opsList.enqueue(turret3, CollisionOp.Operation.ADD);
+        opsList.enqueue(turret4, CollisionOp.Operation.ADD);
+        opsList.enqueue(turret5, CollisionOp.Operation.ADD);
+
+
+    }
+    public void spawnPowerUp(){
+	    opsList.enqueue(new PowerUp(300, 500), CollisionOp.Operation.ADD);
+    }
+    /*public void spawnTurret(){
+
+    }*/
     public void spawnKoopas()  {
         switch (nLevel) {
             case 1:
@@ -141,6 +179,7 @@ public class CommandCenter {
 		movFriends.clear();
 		movFoes.clear();
 		movBackground.clear();
+		movFloater.clear();
 	}
 
 	public  boolean isPlaying() {
@@ -160,7 +199,7 @@ public class CommandCenter {
 	}
 
 	public  boolean isGameOver() {		//if the number of Marios is zero or seconds left is zero, then game over
-		if ((getNumMarios() == 0 || nSecondsLeft == 0 || nLevel > Game.GAME_MAX_LEVEL) && nLevel != 0) {
+		if ((getNumP38s() == 0  || nLevel > Game.GAME_MAX_LEVEL) && nLevel != 0) {
 			return true;
 		}
 		return false;
@@ -222,13 +261,17 @@ public class CommandCenter {
 		return nNumMario;
 	}
     public  int getNumP38s() {
+        //System.out.println("I'm in CommandCenter.getNumP38s()");
         return nNumP38s;
     }
 	public  void setNumMarios(int nParam) {
 		nNumMario = nParam;
 	}
-    public  void setnNumP38s(int nParam) {
+    public  void setNumP38s(int nParam) {
         nNumP38s = nParam;
+    }
+    public void incrementNumP38s(){
+	    nNumP38s++;
     }
 	public  Mario getMario(){
 		return mario;
@@ -254,6 +297,10 @@ public class CommandCenter {
 	public  List<Movable> getMovPlatform() {
 		return movPlatform;
 	}
+
+	public List<Movable> getMovFloater(){
+	    return movFloater;
+    }
 
     public int getMoveCountX() { return nMoveCountX; }
     public int getMoveCountY(){ return nMoveCountY;}

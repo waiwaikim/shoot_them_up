@@ -10,6 +10,7 @@ public class Water extends Sprite{
 
     private int waterWidth = 100;
     private int gapAdjust = 0;
+    private final int VERTICAL_SPEED = 2;
     private Image imgWater1 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_1.png").getImage(),waterWidth,waterWidth);
     private Image imgWater2 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_2.png").getImage(),waterWidth,waterWidth);
     private Image imgWater3 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_3.png").getImage(),waterWidth,waterWidth);
@@ -40,8 +41,10 @@ public class Water extends Sprite{
         super(nCenterX, nCenterY);
         this.nCenterX = nCenterX;
         this.nCenterY = nCenterY;
+        setDeltaY(VERTICAL_SPEED);
         setTeam(Team.BACKGROUND);
         setCenter(new Point(nCenterX, nCenterY));
+        //setExpire(100);
         setHeight(100);
         setWidth(100);
     }
@@ -49,40 +52,52 @@ public class Water extends Sprite{
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
-        //first row
-        g2d.drawImage(imgWater1, getCenter().x, getCenter().y,null);
-        g2d.drawImage(imgWater2, getCenter().x + waterWidth , getCenter().y,null);
-        g2d.drawImage(imgWater3, getCenter().x + (2*waterWidth), getCenter().y,null);
-        g2d.drawImage(imgWater4, getCenter().x + (3*waterWidth),  getCenter().y,null);
-        g2d.drawImage(imgWater1, getCenter().x + (4*waterWidth), getCenter().y,null);
-        g2d.drawImage(imgWater2, getCenter().x + (5*waterWidth),  getCenter().y,null);
-        g2d.drawImage(imgWater3, getCenter().x + (6*waterWidth),  getCenter().y,null);
-        //second row
-        g2d.drawImage(imgWater5, getCenter().x, getCenter().y+ waterWidth,null);
-        g2d.drawImage(imgWater6, getCenter().x + waterWidth, getCenter().y + waterWidth,null);
-        g2d.drawImage(imgWater7, getCenter().x + (2*waterWidth), getCenter().y + waterWidth,null);
-        g2d.drawImage(imgWater8, getCenter().x + (3*waterWidth), getCenter().y+ waterWidth,null);
-        g2d.drawImage(imgWater5, getCenter().x + (4*waterWidth), getCenter().y + waterWidth,null);
-        g2d.drawImage(imgWater6, getCenter().x + (5*waterWidth), getCenter().y+ waterWidth,null);
-        g2d.drawImage(imgWater7, getCenter().x + (6*waterWidth), getCenter().y+ waterWidth,null);
-        //third row
-        g2d.drawImage(imgWater2, getCenter().x  , getCenter().y+ 2*waterWidth,null);
-        g2d.drawImage(imgWater3, getCenter().x + (1*waterWidth), getCenter().y+ 2*waterWidth,null);
-        g2d.drawImage(imgWater4, getCenter().x + (2*waterWidth),  getCenter().y+ 2*waterWidth,null);
-        g2d.drawImage(imgWater1, getCenter().x + (3*waterWidth),  getCenter().y+ 2*waterWidth,null);
-        g2d.drawImage(imgWater2, getCenter().x + (4*waterWidth),  getCenter().y+ 2*waterWidth,null);
-        g2d.drawImage(imgWater3, getCenter().x + (5*waterWidth),  getCenter().y+ 2*waterWidth,null);
-        g2d.drawImage(imgWater1, getCenter().x+ (6*waterWidth), getCenter().y+ 2*waterWidth,null);
-        //fourth row
-        g2d.drawImage(imgWater6, getCenter().x , getCenter().y + 3*waterWidth,null);
-        g2d.drawImage(imgWater7, getCenter().x + (1*waterWidth), getCenter().y + 3*waterWidth,null);
-        g2d.drawImage(imgWater8, getCenter().x + (2*waterWidth), getCenter().y+ 3*waterWidth,null);
-        g2d.drawImage(imgWater5, getCenter().x + (3*waterWidth), getCenter().y + 3*waterWidth,null);
-        g2d.drawImage(imgWater6, getCenter().x + (4*waterWidth), getCenter().y+ 3*waterWidth,null);
-        g2d.drawImage(imgWater7, getCenter().x + (5*waterWidth), getCenter().y+ 3*waterWidth,null);
-        g2d.drawImage(imgWater5, getCenter().x+ (6*waterWidth), getCenter().y+ 3*waterWidth,null);
 
+        for(int i=0 ; i <4; i++){
+            //first row
+            g2d.drawImage(imgWater1, getCenter().x, getCenter().y+ (400*i),null);
+            g2d.drawImage(imgWater2, getCenter().x + waterWidth , getCenter().y+ (400*i),null);
+            g2d.drawImage(imgWater3, getCenter().x + (2*waterWidth), getCenter().y+ (400*i),null);
+            g2d.drawImage(imgWater4, getCenter().x + (3*waterWidth),  getCenter().y+ (400*i),null);
+            g2d.drawImage(imgWater1, getCenter().x + (4*waterWidth), getCenter().y+ (400*i),null);
+            g2d.drawImage(imgWater2, getCenter().x + (5*waterWidth),  getCenter().y+ (400*i),null);
+            g2d.drawImage(imgWater3, getCenter().x + (6*waterWidth),  getCenter().y+ (400*i),null);
+            //second row
+            g2d.drawImage(imgWater5, getCenter().x, getCenter().y+ waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater6, getCenter().x + waterWidth, getCenter().y + waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater7, getCenter().x + (2*waterWidth), getCenter().y + waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater8, getCenter().x + (3*waterWidth), getCenter().y+ waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater5, getCenter().x + (4*waterWidth), getCenter().y + waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater6, getCenter().x + (5*waterWidth), getCenter().y+ waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater7, getCenter().x + (6*waterWidth), getCenter().y+ waterWidth+ (400*i),null);
+            //third row
+            g2d.drawImage(imgWater2, getCenter().x  , getCenter().y+ 2*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater3, getCenter().x + (1*waterWidth), getCenter().y+ 2*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater4, getCenter().x + (2*waterWidth),  getCenter().y+ 2*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater1, getCenter().x + (3*waterWidth),  getCenter().y+ 2*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater2, getCenter().x + (4*waterWidth),  getCenter().y+ 2*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater3, getCenter().x + (5*waterWidth),  getCenter().y+ 2*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater1, getCenter().x+ (6*waterWidth), getCenter().y+ 2*waterWidth+ (400*i),null);
+            //fourth row
+            g2d.drawImage(imgWater6, getCenter().x , getCenter().y + 3*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater7, getCenter().x + (1*waterWidth), getCenter().y + 3*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater8, getCenter().x + (2*waterWidth), getCenter().y+ 3*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater5, getCenter().x + (3*waterWidth), getCenter().y + 3*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater6, getCenter().x + (4*waterWidth), getCenter().y+ 3*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater7, getCenter().x + (5*waterWidth), getCenter().y+ 3*waterWidth+ (400*i),null);
+            g2d.drawImage(imgWater5, getCenter().x+ (6*waterWidth), getCenter().y+ 3*waterWidth+ (400*i),null);
+        }
+    }
+    public void move() {
+        super.move();
+        setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
 
+        /*if (getExpire() == 0)
+            CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
+        else{
+            setExpire(getExpire() - 1);
+            setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
+        }*/
     }
 
 

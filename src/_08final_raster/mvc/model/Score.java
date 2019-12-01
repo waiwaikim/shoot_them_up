@@ -44,7 +44,7 @@ public class Score extends Sprite {
         //feature to implement later: show lives as images / energy bar per vital
         g2D.drawString("VITAL",520, 25);
         g2D.drawImage(imgP38Life,520,30,null);
-        strDisplay = "x" + String.format("%02d", CommandCenter.getInstance().getNumMarios());
+        strDisplay = "x" + String.format("%02d", CommandCenter.getInstance().getNumP38s());
         g2D.drawString(strDisplay, 560,55);
 
 

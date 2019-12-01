@@ -3,10 +3,10 @@ package _08final_raster.mvc.model;
 import javax.swing.*;
 import java.awt.*;
 
-public class Enemy1 extends Sprite {
+public class Enemy2 extends Sprite {
 
 
-    private final int HORIZONTAL_SPEED = 3;
+    private final int HORIZONTAL_SPEED = 5;
     private final int VERTICAL_SPEED = 5;
     private int adjustWidth = 50;
     private boolean bDead;
@@ -20,12 +20,12 @@ public class Enemy1 extends Sprite {
     private Image imgEnemy= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe1.png").getImage(), adjustWidth, adjustWidth);
     private Image imgEnemyExploded = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode.gif").getImage(), adjustWidth, adjustWidth);
 
-    public Enemy1(int nCenterX, int nCenterY) {
+    public Enemy2(int nCenterX, int nCenterY) {
         super(nCenterX, nCenterY);
         setTeam(Team.FOE);
         setCenter(new Point(nCenterX, nCenterY));
-        setDeltaX(HORIZONTAL_SPEED);
         setDeltaY(VERTICAL_SPEED);
+        setDeltaX(HORIZONTAL_SPEED);
         setRadius(16);
         setHeight(32);
         setWidth(32);

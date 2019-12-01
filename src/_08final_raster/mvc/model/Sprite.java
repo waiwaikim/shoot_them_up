@@ -99,7 +99,7 @@ public abstract class Sprite implements Movable {
 
     public void setLeftDirection() { };
     public void setRightDirection() { };
-    public void setUpDirection(){};
+    public void setUpDirection(){  };
     public void setDownDirection(){};
     public void setDead() {
         this.bDead = true;

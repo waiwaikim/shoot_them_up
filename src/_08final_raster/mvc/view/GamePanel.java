@@ -146,6 +146,7 @@ public class GamePanel extends Panel {
 					(ArrayList<Movable>)  CommandCenter.getInstance().getMovBackground(),
                     (ArrayList<Movable>)  CommandCenter.getInstance().getMovFriends(),
 					(ArrayList<Movable>)  CommandCenter.getInstance().getMovPlatform(),
+                    (ArrayList<Movable>)  CommandCenter.getInstance().getMovFloater(),
 					(ArrayList<Movable>)  CommandCenter.getInstance().getMovFoes());
 		}
 		//draw the double-Buffered Image to the graphics context of the panel
