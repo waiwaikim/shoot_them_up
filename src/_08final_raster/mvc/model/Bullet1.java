@@ -1,5 +1,7 @@
 package _08final_raster.mvc.model;
 
+import sun.text.normalizer.VersionInfo;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,8 +9,10 @@ public class Bullet1 extends Sprite {
 
     private int FIRE_POWER = 0;
     private int adjustWidth = 15;
-    private final int VERTICAL_SPEED = -15;
+    private int VERTICAL_SPEED = -15;
+    private int HORIZONTAL_SPEED = 0;
     private Image imgBullet1= getScaledImage(new ImageIcon(Sprite.strImageDir + "weapon_1.png").getImage(), adjustWidth, adjustWidth);
+
 
     public Bullet1(P38 p38){
         super(p38.getCenter().x, p38.getCenter().y);
@@ -22,7 +26,7 @@ public class Bullet1 extends Sprite {
 
         //everything is relative to P38 that fired the bullet
 
-        setDeltaX(p38.getDeltaX());
+        setDeltaX(p38.getDeltaX()+ HORIZONTAL_SPEED);
         setDeltaY(p38.getDeltaY()+VERTICAL_SPEED);
 
     }

@@ -6,8 +6,8 @@ import java.awt.*;
 public class Enemy1 extends Sprite {
 
 
-    private final int HORIZONTAL_SPEED = 3;
-    private final int VERTICAL_SPEED = 5;
+    private int HORIZONTAL_SPEED = 3;
+    private int VERTICAL_SPEED = 5;
     private int adjustWidth = 50;
     private boolean bDead;
 
@@ -15,21 +15,42 @@ public class Enemy1 extends Sprite {
     public static final int WORTH = +100;
     private int nWorthDeltaY = -5;
     private int nWorthY = 0;
+    private int nEnemyDirection;
 
 
     private Image imgEnemy= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe1.png").getImage(), adjustWidth, adjustWidth);
     private Image imgEnemyExploded = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode.gif").getImage(), adjustWidth, adjustWidth);
 
-    public Enemy1(int nCenterX, int nCenterY) {
+    public Enemy1(int nCenterX, int nCenterY, int nEnemyDirection) {
         super(nCenterX, nCenterY);
         setTeam(Team.FOE);
         setCenter(new Point(nCenterX, nCenterY));
-        setDeltaX(HORIZONTAL_SPEED);
-        setDeltaY(VERTICAL_SPEED);
+
         setRadius(16);
         setHeight(32);
         setWidth(32);
         bDead = false;
+
+        switch(nEnemyDirection){
+            case(1):
+                VERTICAL_SPEED = 4;
+                HORIZONTAL_SPEED = 0;
+                break;
+            case(2):
+                VERTICAL_SPEED = 5;
+                HORIZONTAL_SPEED = -3;
+                break;
+            case(3):
+                VERTICAL_SPEED = 5 ;
+                HORIZONTAL_SPEED = 3;
+                break;
+
+            default:
+                VERTICAL_SPEED = 3;
+                HORIZONTAL_SPEED = 0;
+        }
+        setDeltaX(HORIZONTAL_SPEED);
+        setDeltaY(VERTICAL_SPEED);
     }
 
     @Override
@@ -72,11 +93,11 @@ public class Enemy1 extends Sprite {
         setRadius(0);
         nDeadTimeLeft = 2;
         nWorthY = getCenter().y;
-
     }
 
     @Override
     public boolean isDead() { return bDead; }
+
 
     private void setImage() {
         if (bDead) {

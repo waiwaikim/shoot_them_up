@@ -33,6 +33,7 @@ public abstract class Sprite implements Movable {
     // Expiry team for this sprite
     private int nDeadTimeLeft = 0;
     private  boolean bDead;
+    private boolean bOutFrame;
 
     // project directory with images
     public static String strImageDir  = System.getProperty("user.dir") + File.separator + "src"
@@ -138,6 +139,15 @@ public abstract class Sprite implements Movable {
 
     public boolean isDead() { return bDead; }
 
+    public boolean isOutFrame(){return bOutFrame;}
+
+    public void setOutFrame(){
+        Point pnt = getCenter();
+        if(pnt.x <= 0 || pnt.x>=700 || pnt.y <=0 || pnt.y >= 1000)
+            bOutFrame = true;
+        else
+            bOutFrame = false;
+    }
 
 
 

@@ -8,6 +8,8 @@ import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.Random;
 
@@ -28,15 +30,10 @@ public class Game implements Runnable, KeyListener {
 	public final static int ANI_DELAY = 45; // milliseconds between screen
 											// updates (animation)
 
-    public static final int GAME_MAX_LEVEL = 2; // Define max number of levels to determine if game is over.
+    public static final int GAME_MAX_LEVEL = 1; // Define max number of levels to determine if game is over.
 	private Thread thrAnim;
 	private int nTick = 0;
-    private final int FOE_LEVEL_MULTIPLIER = 4; //Number of foes active based on level.
 
-    private final int GOOMBA_INTRO_INTERVAL = 4500; // Milliseconds
-    private final int SHIP_INTRO_INTERVAL = 8000;
-    private final int KOOPA_INTRO_INTERVAL = 12000; // Milliseconds
-    private final int PARATROOPA_INTRO_INTERVAL = 12000; // Milliseconds
     private long lStartTime = System.currentTimeMillis();
 
 	private boolean bMuted = false;
@@ -87,6 +84,9 @@ public class Game implements Runnable, KeyListener {
 
 		thrAnim.setPriority(Thread.MIN_PRIORITY);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+
+
 		while (Thread.currentThread() == thrAnim) {
 
 			tick();
@@ -94,12 +94,9 @@ public class Game implements Runnable, KeyListener {
             // Check items in order of priority
             checkGameOver();
             checkLevelClear();
-            checkHorizontalCollision();
-            checkExpiringCoins();
             checkP38Dead();
 			gmpPanel.update(gmpPanel.getGraphics());
             checkCollision();
-            checkClouds();
             checkFoes();
             addFoes();
             processQueue();
@@ -134,9 +131,6 @@ public class Game implements Runnable, KeyListener {
                 }
             }
         }
-        if (CommandCenter.getInstance().isLevelClear() && CommandCenter.getInstance().getFlag().getCenter().y > 650) {
-            setNextLevel();
-        }
     }
 
     // Check if Game is over and stop background music
@@ -148,8 +142,6 @@ public class Game implements Runnable, KeyListener {
 
     // Method to draw background based on current level of game.
 	private void drawBackGround() {
-
-        Ground ground;
         Water water;
         Score score;
 
@@ -177,11 +169,6 @@ public class Game implements Runnable, KeyListener {
 
     }
 
-
-    // Method to draw the game level components
-    private void drawLevelGame() {
-        Flag flag;
-    }
 
     // Method to check gravity of Mario
 	private void checkP38Dead() {
@@ -217,14 +204,16 @@ public class Game implements Runnable, KeyListener {
                 nFoeRadius = movFoe.getRadius();
 
                 //detect collision between Friend and Foe
-                if(checkWithinRange(pntFriendCenter, nFriendRadius, pntFoeCenter,nFoeRadius)){
+                if(checkWithinRange(pntFriendCenter, nFriendRadius, pntFoeCenter,nFoeRadius)
+                        && !((Sprite) movFoe).isOutFrame()
+                        && !((Sprite) movFriend).isOutFrame()){
 
                     //P38
                     if((movFriend instanceof  P38)){
                         P38 myPlane = (P38) movFriend;
 
                         //when P38 and enemy plane1 collides or when P38 and enemy bullets hits
-                        if(movFoe instanceof Enemy1 || movFoe instanceof EnemyBullet){
+                        if(movFoe instanceof Enemy1 || movFoe instanceof Enemy2 || movFoe instanceof EnemyBullet || movFoe instanceof SmartBullet){
                             if (!myPlane.isDead()){
                                 stopLoopingSounds(clpMusicBackground);
                                 Sound.playSound("Mario_die.wav");
@@ -254,7 +243,7 @@ public class Game implements Runnable, KeyListener {
             for(Movable movFloater : CommandCenter.getInstance().getMovFloater()){
                 pntFloaterCenter = movFloater.getCenter();
                 nFloaterRadius = movFloater.getRadius();
-                if(pntP38Center.distance(pntFloaterCenter) < (nFloaterRadius + nP38Radius)){
+                if(pntP38Center.distance(pntFloaterCenter) < (nFloaterRadius + nP38Radius) && !((Sprite) movFloater).isOutFrame()){
 
                     if(movFloater instanceof PowerUp){
 
@@ -272,74 +261,44 @@ public class Game implements Runnable, KeyListener {
         }
 
     }
-    // Check for auto-expiring coins from the question block
-    private void checkExpiringCoins() {
-        if (CommandCenter.getInstance().getMario() != null) {
-            for (Movable movFriend : CommandCenter.getInstance().getMovFriends()) {
-                if (movFriend instanceof ExpiringCoin) {
-                    if (((ExpiringCoin) movFriend).getExpiryCounter() > 0) {
-                        ((ExpiringCoin) movFriend).decrExpiryCounter();
-                    } else {
-                        CommandCenter.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
-                    }
-                }
-            }
-        }
-    }
-
-    // Check for horizontal collision with pipe or block
-    private void checkHorizontalCollision() {
-
-        if (CommandCenter.getInstance().getMario() != null) {
-            Mario mario = CommandCenter.getInstance().getMario();
-
-            int nMarioWidth = mario.getWidth();
-            int nMarioCenterX = mario.getCenter().x;
-            int nMarioCenterY = mario.getCenter().y;
-
-            for (Movable movPlatform : CommandCenter.getInstance().getMovPlatform()) {
-                if (((movPlatform instanceof Pipe || movPlatform instanceof Block)
-                        && nMarioCenterY > movPlatform.getCenter().y
-                        && ((movPlatform.getCenter().x + movPlatform.getWidth() < nMarioCenterX
-                        && movPlatform.getCenter().x + movPlatform.getWidth() > nMarioCenterX + mario.getDeltaMoveLeftX()
-                        && mario.getMoveLeftCount() > 0 )
-                        || (nMarioCenterX + nMarioWidth < movPlatform.getCenter().x
-                        && nMarioCenterX + nMarioWidth + mario.getDeltaMoveRightX() > movPlatform.getCenter().x
-                        && mario.getMoveRightCount() > 0))
-                        && mario.checkMarioMoving())) {
-                    mario.stopMarioHorizontalMove();
-                }
-            }
-        }
-    }
-
-    // Method to check if cloud is out of screen, then remove and add a replacement for the same type
-    private void checkClouds() {
-        for (Movable movBackground : CommandCenter.getInstance().getMovBackground()) {
-            if (movBackground instanceof Cloud1 && (movBackground.getCenter().x + movBackground.getWidth() + 100 < 0)) {
-                CommandCenter.getInstance().getOpsList().enqueue(movBackground, CollisionOp.Operation.REMOVE);
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud1(DIM.width + 20,200), CollisionOp.Operation.ADD);
-            }
-            if (movBackground instanceof Cloud2 && (movBackground.getCenter().x + movBackground.getWidth() + 100 < 0)) {
-                CommandCenter.getInstance().getOpsList().enqueue(movBackground, CollisionOp.Operation.REMOVE);
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud2(DIM.width + 20,150), CollisionOp.Operation.ADD);
-            }
-            if (movBackground instanceof Cloud3 && (movBackground.getCenter().x + movBackground.getWidth() + 200 < 0)) {
-                CommandCenter.getInstance().getOpsList().enqueue(movBackground, CollisionOp.Operation.REMOVE);
-                CommandCenter.getInstance().getOpsList().enqueue(new Cloud3(DIM.width + 20,100), CollisionOp.Operation.ADD);
-            }
-        }
-    }
 
 
-    //Method for FOES to shoot bullets
+    //Method for FOE to shoot bullets
+    //This is where shooting happens
     private void checkFoes() {
 
         for(Movable movFoe : CommandCenter.getInstance().getMovFoes()){
-            if(movFoe instanceof Enemy1 ){
+            if(movFoe instanceof Enemy1  && !((Enemy1) movFoe).isOutFrame()){
                 Enemy1 myEnemy = (Enemy1) movFoe;
-                if(getTick()%10==0){
-                    CommandCenter.getInstance().getOpsList().enqueue(new EnemyBullet(myEnemy), CollisionOp.Operation.ADD);
+                if(getTick()%20==0){
+                    CommandCenter.getInstance().getOpsList().enqueue(new EnemyBullet(myEnemy, 2), CollisionOp.Operation.ADD);
+                  }
+            }
+            if(movFoe instanceof  Enemy2 && !((Enemy2) movFoe).isOutFrame()){
+                Enemy2 myEnemy = (Enemy2) movFoe;
+                if(getTick()%30 ==0){
+                    CommandCenter.getInstance().getOpsList().enqueue(new SmartBullet(myEnemy, CommandCenter.getInstance().getP38()), CollisionOp.Operation.ADD);
+                }
+            }
+            if(movFoe instanceof Turret && !((Turret) movFoe).isOutFrame()){
+                Turret myTurret = (Turret)movFoe;
+                switch (myTurret.getImgIndex()){
+                    case(1):
+                        if(getTick()%30==0)
+                            CommandCenter.getInstance().getOpsList().enqueue(new EnemyBullet(myTurret, 1), CollisionOp.Operation.ADD);
+                        break;
+                    case(2):
+                        if((getTick()+5)%30==0)
+                            CommandCenter.getInstance().getOpsList().enqueue(new EnemyBullet(myTurret, 2), CollisionOp.Operation.ADD);
+                        break;
+                    case(3):
+                        if((getTick()+10)%30==0)
+                            CommandCenter.getInstance().getOpsList().enqueue(new EnemyBullet(myTurret, 5), CollisionOp.Operation.ADD);
+                        break;
+                    case(4):
+                        if((getTick()+15)%30==0)
+                            CommandCenter.getInstance().getOpsList().enqueue(new EnemyBullet(myTurret, 4), CollisionOp.Operation.ADD);
+                        break;
                 }
             }
         }
@@ -350,11 +309,15 @@ public class Game implements Runnable, KeyListener {
     // Ensure number of foes are proportionate to game level
     private void addFoes() {
         if (CommandCenter.getInstance().getLevel() != 0) {
-            if (getTick() % (GOOMBA_INTRO_INTERVAL /ANI_DELAY/ CommandCenter.getInstance().getLevel()) == 0) {
-                CommandCenter.getInstance().spawnEnemy1();
+            if (getTick()%100 == 0){
+                CommandCenter.getInstance().spawnEnemy1_1();
+            }
+            if(getTick()%1000 ==0){
                 CommandCenter.getInstance().spawnPowerUp();
             }
-
+            if(getTick()>1000 && getTick()%300 ==0){
+                CommandCenter.getInstance().spawnEnemy2();
+            }
             if(getTick()%300 == 0){
                 CommandCenter.getInstance().spawnShip();
             }
@@ -471,7 +434,6 @@ public class Game implements Runnable, KeyListener {
 		CommandCenter.getInstance().setPlaying(true);
 		CommandCenter.getInstance().setPaused(false);
 		drawBackGround();
-        drawLevelGame();
         CommandCenter.getInstance().spawnP38(true);
         //CommandCenter.getInstance().spawnMario(true);
     }
@@ -574,47 +536,43 @@ public class Game implements Runnable, KeyListener {
         else return false;
     }
 
-    /*public boolean checkWithinRange(int nObj1Center, int nObj1Length, int nObj2Center, int nObj2Length) {
-        if ((nObj1Center + nObj1Length >= nObj2Center && nObj1Center <= nObj2Center)
-                || (nObj2Center + nObj2Length >= nObj1Center && nObj2Center <= nObj1Center)) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
 
     // Method to move right when the right arrow key is pressed. If Mario is beyond his screen limit, move everything else to left
     private void moveRight() {
-        if (CommandCenter.getInstance().getP38().getCenter().getX() > P38.SCREEN_RIGHT_LIMIT) {
-            CommandCenter.getInstance().getP38().moveNotRight();
+        CommandCenter.getInstance().getP38().moveRight();
+       /* if (CommandCenter.getInstance().getP38().getCenter().getX() > P38.SCREEN_RIGHT_LIMIT) {
+            //sCommandCenter.getInstance().getP38().moveNotRight();
         } else {
-            CommandCenter.getInstance().getP38().moveRight();
-        }
+
+        }*/
     }
 
     // Similar to moveRight method but this is for moving left.
     private void moveLeft() {
-        if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
-            CommandCenter.getInstance().getP38().moveNotLeft();
+        CommandCenter.getInstance().getP38().moveLeft();
+        /*if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
+            //CommandCenter.getInstance().getP38().moveNotLeft();
         } else {
-            CommandCenter.getInstance().getP38().moveLeft();
-        }
+
+        }*/
     }
     private void moveUp() {
-        if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
-            /*----------------------- NEED TO UPDATE -----------------------*/
-            moveEverythingRight();
+        CommandCenter.getInstance().getP38().moveUp();
+        /*if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
+            *//*----------------------- NEED TO UPDATE -----------------------*//*
+            //moveEverythingRight();
         } else {
-            CommandCenter.getInstance().getP38().moveUp();
-        }
+
+        }*/
     }
     private void moveDown() {
-        if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
-            /*----------------------- NEED TO UPDATE -----------------------*/
-            moveEverythingRight();
+        CommandCenter.getInstance().getP38().moveDown();
+        /*if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
+            *//*----------------------- NEED TO UPDATE -----------------------*//*
+            //moveEverythingRight();
         } else {
-            CommandCenter.getInstance().getP38().moveDown();
-        }
+
+        }*/
     }
 
     private void moveEverythingLeft() {
@@ -628,34 +586,7 @@ public class Game implements Runnable, KeyListener {
     }
 
 
-    // Method to increment to next level of the game.
-    private void setNextLevel() {
-            CommandCenter.getInstance().setLevelClear(false);
-            CommandCenter.getInstance().setNextLevel();
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            switch (CommandCenter.getInstance().getLevel()) {
-                case 2:
-                    clpMusicBackground = Sound.clipForLoopFactory("Mario_Birabuto_Kingdom.wav");
-                    break;
-                default:
-                    clpMusicBackground = Sound.clipForLoopFactory("Mario_background.wav");
-                    break;
-            }
-            clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
-            CommandCenter.getInstance().clearAll();
-            CommandCenter.getInstance().setNumMarios(5);
-            CommandCenter.getInstance().setCoins(0);
-            drawBackGround();
-            drawLevelGame();
 
-            CommandCenter.getInstance().spawnMario(true);
-            CommandCenter.getInstance().setTimeLeft(300);
-
-        }
 
 }
 

@@ -6,18 +6,19 @@ import java.awt.*;
 public class Enemy2 extends Sprite {
 
 
-    private final int HORIZONTAL_SPEED = 5;
-    private final int VERTICAL_SPEED = 5;
-    private int adjustWidth = 50;
+    private final int HORIZONTAL_SPEED = 0;
+    private final int VERTICAL_SPEED = 1;
+    private int adjustWidth = 80;
     private boolean bDead;
+    private int nEnergy = 0;
 
     private int nDeadTimeLeft = 0;
-    public static final int WORTH = +100;
+    public static final int WORTH = +200;
     private int nWorthDeltaY = -5;
     private int nWorthY = 0;
 
 
-    private Image imgEnemy= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe1.png").getImage(), adjustWidth, adjustWidth);
+    private Image imgEnemy= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe2.png").getImage(), adjustWidth, adjustWidth);
     private Image imgEnemyExploded = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode.gif").getImage(), adjustWidth, adjustWidth);
 
     public Enemy2(int nCenterX, int nCenterY) {
@@ -30,6 +31,7 @@ public class Enemy2 extends Sprite {
         setHeight(32);
         setWidth(32);
         bDead = false;
+        nEnergy= 300;
     }
 
     @Override

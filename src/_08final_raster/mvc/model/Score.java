@@ -35,10 +35,10 @@ public class Score extends Sprite {
         strDisplay = String.format("%05d", CommandCenter.getInstance().getScore());
         g2D.drawString(strDisplay, 55, 50);
 
-        // Highest score achieved
-        //g2D.drawString("HI-SCORE", 230, nFontHeight + 20);
-        //strDisplay = String.format("%01d", CommandCenter.getInstance().getLevel());
-        //g2D.drawString(strDisplay, 295, nFontHeight + 45);
+        // Game time left
+        g2D.drawString("TIME LEFT", 230, 25);
+        strDisplay = String.format("%01d", CommandCenter.getInstance().getGameTimeLeft());
+        g2D.drawString(strDisplay, 295, 45);
 
         //lives left - energy
         //feature to implement later: show lives as images / energy bar per vital

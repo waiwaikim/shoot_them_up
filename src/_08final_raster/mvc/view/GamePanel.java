@@ -1,11 +1,9 @@
 package _08final_raster.mvc.view;
 
 import _08final_raster.mvc.controller.Game;
-import _08final_raster.mvc.model.Coin;
 import _08final_raster.mvc.model.CommandCenter;
 import _08final_raster.mvc.model.Movable;
 import _08final_raster.mvc.model.Sprite;
-import _08final_raster.mvc.view.GameFrame;
 import _08final_raster.sounds.Sound;
 
 import javax.swing.*;
@@ -27,7 +25,6 @@ public class GamePanel extends Panel {
 	private Font fnt = new Font("SansSerif", Font.BOLD, 12);
 	private Font fntBig = new Font("SansSerif", Font.BOLD, 28);
     private Font customFont;
-    private Coin coinScore = new Coin(220,22);
     private Image imgP38Life = new ImageIcon(Sprite.strImageDir + "P38_Lives.png").getImage();
 	private FontMetrics fmt;
 	private int nFontWidth;
@@ -54,36 +51,7 @@ public class GamePanel extends Panel {
     public Graphics getGrpOff(){
 	    return grpOff;
     }
-	public void drawScore() {
 
-        Graphics2D g2D = (Graphics2D) grpOff;
-		g2D.setColor(Color.white);
-        g2D.setFont(customFont);
-
-        // Player's current score
-		g2D.drawString("SCORE", nFontWidth + 30, nFontHeight + 20);
-        strDisplay = String.format("%05d", CommandCenter.getInstance().getScore());
-		g2D.drawString(strDisplay, nFontWidth + 33, nFontHeight + 45);
-
-        // Highest score achieved
-        //g2D.drawString("HI-SCORE", 230, nFontHeight + 20);
-        //strDisplay = String.format("%01d", CommandCenter.getInstance().getLevel());
-        //g2D.drawString(strDisplay, 295, nFontHeight + 45);
-
-        //lives left - energy
-        //feature to implement later: show lives as images / energy bar per vital
-        g2D.drawString("VITAL", 490, nFontHeight + 20);
-        g2D.drawImage(imgP38Life,490,nFontHeight + 30,null);
-        strDisplay = "x" + String.format("%02d", CommandCenter.getInstance().getNumMarios());
-        g2D.drawString(strDisplay, 520,nFontHeight + 45);
-
-        // Draw coin score
-        //coinScore.draw(g2D);
-        //strDisplay = "x" + String.format("%03d", CommandCenter.getInstance().getCoins());
-        //g2D.drawString(strDisplay, 245, 47);
-
-        // Draw time left
-	}
 
 	@SuppressWarnings("unchecked")
 	public void update(Graphics g) {
@@ -94,8 +62,7 @@ public class GamePanel extends Panel {
 			grpOff = imgOff.getGraphics();
 		}
 
-		// Fill in background with Mario blue.
-		//.setColor(new Color(0, 98, 157));
+
         grpOff.setColor(Color.black);
 		grpOff.fillRect(0, 0, Game.DIM.width, Game.DIM.height);
 
@@ -127,20 +94,11 @@ public class GamePanel extends Panel {
 		else {
 		    //plyaing and not paushed!
             // Update game timer
-            if (CommandCenter.getInstance().getMario() != null && !CommandCenter.getInstance().getMario().isDead()) {
+            if (CommandCenter.getInstance().getP38() != null && !CommandCenter.getInstance().getP38().isDead()) {
                 CommandCenter.getInstance().updateTimeLeft();
             }
 
-            //drawScore();
 
-            // Control frame movement. Check if movement will cause first or last ground block to go out of screen bounds
-            if (CommandCenter.getInstance().getMoveCountX() != 0
-                && (CommandCenter.getInstance().getGroundFirst().getCenter().getX() + CommandCenter.getInstance().getDeltaX() > 0
-                    || (CommandCenter.getInstance().getGroundLast().getCenter().getX()
-                        +   CommandCenter.getInstance().getGroundLast().getWidth()
-                        +   CommandCenter.getInstance().getDeltaX()) < Game.DIM.width)) {
-                CommandCenter.getInstance().setMoveCountX(0);
-            }
 
 			iterateMovables(grpOff,
 					(ArrayList<Movable>)  CommandCenter.getInstance().getMovBackground(),
@@ -201,7 +159,7 @@ public class GamePanel extends Panel {
 	private void displayTextOnScreen(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         Image rawBackground = new ImageIcon(Sprite.strImageDir + "Front_Background.png").getImage();
-        Image resizedBackground = getScaledImage(rawBackground, 700, 1000);
+        Image resizedBackground = getScaledImage(rawBackground, Game.DIM.width, Game.DIM.height);
         g2d.drawImage(resizedBackground,0,0,null);
 
         //Image imgBanner = new ImageIcon(Sprite.strImageDir + "mario_banner.jpg").getImage();

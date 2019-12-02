@@ -73,38 +73,45 @@ public class P38 extends Sprite {
 
         Point pnt = getCenter();
 
-        if (nMoveRightCount > 0) {
-            setCenter(new Point(getCenter().x + DEFAULT_HORIZONTAL_SPEED, getCenter().y));
+        if (nMoveRightCount>0) {
+            //moving right
+            if(pnt.x+this.p38Width+1 > Game.DIM.width){
+                setCenter(new Point(Game.DIM.width-p38Width, pnt.y));
+            }
+            else{
+                setCenter(new Point(getCenter().x + DEFAULT_HORIZONTAL_SPEED, getCenter().y));
+            }
             nMoveRightCount--;
         } else if (nMoveLeftCount > 0){
-            setCenter(new Point(getCenter().x - DEFAULT_HORIZONTAL_SPEED, getCenter().y));
+            //moving left
+            if(pnt.x - 3 < 0){
+                setCenter(new Point(1, pnt.y));
+            }
+            else{
+                setCenter(new Point(getCenter().x - DEFAULT_HORIZONTAL_SPEED, getCenter().y));
+            }
             nMoveLeftCount--;
         }
         else if(nMoveUpCount>0){
-            setCenter(new Point(getCenter().x, getCenter().y - DEFAULT_VERTICAL_SPEED));
+            //moving up
+            if(pnt.y - 3< 0){
+                setCenter(new Point(pnt.x, 1));
+            }
+            else{
+                setCenter(new Point(getCenter().x, getCenter().y - DEFAULT_VERTICAL_SPEED));
+            }
             nMoveUpCount--;
         }
-        else if(nMoveDownCount>0){
-            setCenter(new Point(getCenter().x, getCenter().y + DEFAULT_VERTICAL_SPEED));
+        else if(nMoveDownCount>0 ){
+            //moving down
+            if ((pnt.y + p38Width+1) > Game.DIM.height){
+                setCenter(new Point(pnt.x, Game.DIM.height - p38Width));
+            }
+            else{
+                setCenter(new Point(getCenter().x, getCenter().y + DEFAULT_VERTICAL_SPEED));
+            }
             nMoveDownCount--;
         }
-
-        if(pnt.x > Game.DIM.width){
-            //going over to the right
-            setCenter(new Point(Game.DIM.width, pnt.y));
-        } else if (pnt.x < 0) {
-            //going ove to the left
-            setCenter(new Point(1, pnt.y));
-        } else if (pnt.y > Game.DIM.height) {
-            //going over to the bottom
-            setCenter(new Point(pnt.x, Game.DIM.height));
-        } else if (pnt.y < 0) {
-            //going over to the top
-            setCenter(new Point(pnt.x, 1));
-        }
-
-
-
     }
 
     public void stopHorizontalMove(){

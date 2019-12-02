@@ -49,7 +49,6 @@ public class Turret extends Sprite  {
             default:
                 g2d.drawImage(imgTurret1, getCenter().x, getCenter().y,null);
         }
-
         if (bDead) {
         }
     }
@@ -81,6 +80,6 @@ public class Turret extends Sprite  {
         return WORTH;
     }
 
-
+    public int getImgIndex(){return nImgIndex;}
 
 }

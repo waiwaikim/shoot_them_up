@@ -14,13 +14,11 @@ public class CommandCenter {
 
     private int nNumP38s;
     private P38 p38;
-	private  int nNumMario;
+
 	private  int nLevel;
 	private  long lScore;
-	private  int nCoins;
 
-	private  Mario mario;
-    private  Flag flag;
+
 	private  boolean bPlaying;
 	private  boolean bPaused;
     private int nSecondsLeft;
@@ -28,8 +26,6 @@ public class CommandCenter {
     private boolean bInitPosFlag = false;
     private boolean bLevelClear = false;
     private Point pntFlagCenterTracker;
-
-    private Ground groundFirst, groundLast;
 
     private Water waterFirst, waterLast;
 	
@@ -65,7 +61,7 @@ public class CommandCenter {
         //setCoins(0);
 		//setNumMarios(5);
 		setNumP38s(5);
-        nSecondsLeft = 9000;
+        nSecondsLeft = 300;
         lSysTimeSeconds = System.currentTimeMillis()/1000;
 	}
 
@@ -74,17 +70,7 @@ public class CommandCenter {
     }
 
 
-	// The parameter is true if this is for the beginning of the game, otherwise false
-	public  void spawnMario(boolean bFirst) {
-		if (getNumMarios() != 0) {
-			mario = new Mario(220,680);
-			opsList.enqueue(mario, CollisionOp.Operation.ADD);
-			if (!bFirst) {
-                setInitPosFlag(true);
-                setNumMarios(getNumMarios() - 1);
-            }
-		}
-	}
+
     // The parameter is true if this is for the beginning of the game, otherwise false
     public  void spawnP38(boolean bFirst) {
         if (getNumP38s() != 0) {
@@ -96,7 +82,8 @@ public class CommandCenter {
             }
             else{
                 //System.out.println(P38.nSpawnLoctionX +" "  + P38.nSpawnLoctionY);
-                p38 = new P38(P38.getSpawnLocationX(), P38.getnSpawnLoctionY()-150);
+                //p38 = new P38(P38.getSpawnLocationX(), P38.getnSpawnLoctionY()-150);
+                p38 = new P38(350,700);
                 opsList.enqueue(p38, CollisionOp.Operation.ADD);
                 setInitPosFlag(true);
                 setNumP38s(getNumP38s() - 1);
@@ -107,21 +94,17 @@ public class CommandCenter {
         }
     }
 
-	public void spawnGoombas()  {
-        switch (nLevel) {
-            case 1:
-                opsList.enqueue(new Goomba(1040,680), CollisionOp.Operation.ADD);
-                break;
-            case 2:
-                opsList.enqueue(new Goomba(1040,680), CollisionOp.Operation.ADD);
-                break;
-        }
+    public void spawnEnemy1_1()  {
+        opsList.enqueue(new Enemy1(200,-100, 1), CollisionOp.Operation.ADD);
     }
-    public void spawnEnemy1()  {
-        opsList.enqueue(new Enemy1(200,100), CollisionOp.Operation.ADD);
+    public void spawnEnemy1_2()  {
+        opsList.enqueue(new Enemy1(200,100, 2), CollisionOp.Operation.ADD);
+    }
+    public void spawnEnemy1_3()  {
+        opsList.enqueue(new Enemy1(200,100, 3), CollisionOp.Operation.ADD);
     }
     public void spawnEnemy2()  {
-        opsList.enqueue(new Enemy2(200,100), CollisionOp.Operation.ADD);
+        opsList.enqueue(new Enemy2(350, -150), CollisionOp.Operation.ADD);
     }
     public void spawnShip()  {
 
@@ -147,24 +130,7 @@ public class CommandCenter {
     public void spawnPowerUp(){
 	    opsList.enqueue(new PowerUp(300, 500), CollisionOp.Operation.ADD);
     }
-    /*public void spawnTurret(){
 
-    }*/
-    public void spawnKoopas()  {
-        switch (nLevel) {
-            case 1:
-                opsList.enqueue(new Koopa(1040,664), CollisionOp.Operation.ADD);
-                break;
-        }
-    }
-
-    public void spawnParatroopas()  {
-        switch (nLevel) {
-            case 2:
-                opsList.enqueue(new Paratroopa(1040,664), CollisionOp.Operation.ADD);
-                break;
-        }
-    }
 
 	public GameOpsList getOpsList() {
 		return opsList;
@@ -199,7 +165,7 @@ public class CommandCenter {
 	}
 
 	public  boolean isGameOver() {		//if the number of Marios is zero or seconds left is zero, then game over
-		if ((getNumP38s() == 0  || nLevel > Game.GAME_MAX_LEVEL) && nLevel != 0) {
+		if ((getNumP38s() == 0 || nSecondsLeft == 0 || nLevel > Game.GAME_MAX_LEVEL) && nLevel != 0) {
 			return true;
 		}
 		return false;
@@ -211,14 +177,6 @@ public class CommandCenter {
 
     public void setNextLevel() {
         nLevel++;
-    }
-
-    public void setFlag(Flag flag) {
-        this.flag = flag;
-    }
-
-    public Flag getFlag() {
-        return flag;
     }
 
     public boolean isLevelClear() {
@@ -233,17 +191,6 @@ public class CommandCenter {
 		return lScore;
 	}
 
-    public void setCoins(int nCoins) {
-        this.nCoins = nCoins;
-    }
-
-    public int getCoins() {
-        return nCoins;
-    }
-
-    public void incrCoinScore() {
-        nCoins++;
-    }
 
 	public  void setScore(long lParam) {
 		lScore = lParam;
@@ -257,30 +204,20 @@ public class CommandCenter {
 		nLevel = n;
 	}
 
-	public  int getNumMarios() {
-		return nNumMario;
-	}
     public  int getNumP38s() {
         //System.out.println("I'm in CommandCenter.getNumP38s()");
         return nNumP38s;
     }
-	public  void setNumMarios(int nParam) {
-		nNumMario = nParam;
-	}
+
     public  void setNumP38s(int nParam) {
         nNumP38s = nParam;
     }
     public void incrementNumP38s(){
 	    nNumP38s++;
     }
-	public  Mario getMario(){
-		return mario;
-	}
+
     public P38 getP38(){return p38;}
 
-	public  void setMario(Mario marioParam){
-		mario = marioParam;
-	}
 
 	public  List<Movable> getMovFriends() {
 		return movFriends;
@@ -329,16 +266,7 @@ public class CommandCenter {
     }
     public void setDeltaY(int nDeltaY) { this.nDeltaY = nDeltaY; }
 
-    public void setGroundFirst(Ground ground) { groundFirst = ground;}
-    public void setGroundLast (Ground ground) {
-        groundLast = ground;
-    }
-    public Ground getGroundFirst() {
-        return groundFirst;
-    }
-    public Ground getGroundLast() {
-        return groundLast;
-    }
+
 
     //water
     public void setWaterFirst(Water water) { waterFirst = water;}
