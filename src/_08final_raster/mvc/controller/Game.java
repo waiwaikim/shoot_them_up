@@ -19,7 +19,7 @@ import static java.awt.event.KeyEvent.VK_N;
  *
  *  Date        Author      Description
  *  ----        ------      -----------
- *  06/05/16    Moison      Extended code to implement first two levels of Mario
+ *  12/05/2019    Waiwai      Extended code to implement 1941 Counter Attack
  */
 public class Game implements Runnable, KeyListener {
 
@@ -47,12 +47,12 @@ public class Game implements Runnable, KeyListener {
             DOWN = 40,
 			START = 83, // s key
 			FIRE = 32, // space key
-			MUTE = 77; // m-key mute
+			MUTE = 77, // m-key mute
+            SPEED = 65; // a key to speed up
 
 	private Clip clpMusicBackground;
 
 	public Game() {
-
 		gmpPanel = new GamePanel(DIM);
 		gmpPanel.addKeyListener(this);
 		clpMusicBackground = Sound.clipForLoopFactory("game_background.wav");
@@ -79,13 +79,11 @@ public class Game implements Runnable, KeyListener {
 		}
 	}
 
-
 	public void run() {
 
 		thrAnim.setPriority(Thread.MIN_PRIORITY);
 
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
-
 
 		while (Thread.currentThread() == thrAnim) {
 
@@ -152,13 +150,8 @@ public class Game implements Runnable, KeyListener {
 
         //decrement water placement by 1600
         for(int i=0; i<10; i++){
-            CommandCenter.getInstance().getOpsList().enqueue(new Water(0, -2200-(1600*i)), CollisionOp.Operation.ADD);
+            CommandCenter.getInstance().getOpsList().enqueue(new Water(0, -2100-(1600*i)), CollisionOp.Operation.ADD);
         }
-
-        //last water
-        //water = new Water(0, -8600);
-        //CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
-        //CommandCenter.getInstance().setWaterLast(water);
 
         //Add Island
         CommandCenter.getInstance().getOpsList().enqueue(new Island(DIM.width- 400,-400), CollisionOp.Operation.ADD);
@@ -166,7 +159,6 @@ public class Game implements Runnable, KeyListener {
 
         score = new Score(0, 0);
         CommandCenter.getInstance().getOpsList().enqueue(score, CollisionOp.Operation.ADD);
-
     }
 
 
@@ -259,9 +251,7 @@ public class Game implements Runnable, KeyListener {
                 }
             }
         }
-
     }
-
 
     //Method for FOE to shoot bullets
     //This is where shooting happens
@@ -270,13 +260,13 @@ public class Game implements Runnable, KeyListener {
         for(Movable movFoe : CommandCenter.getInstance().getMovFoes()){
             if(movFoe instanceof Enemy1  && !((Enemy1) movFoe).isOutFrame()){
                 Enemy1 myEnemy = (Enemy1) movFoe;
-                if(getTick()%20==0){
+                if(getTick()%33==0){
                     CommandCenter.getInstance().getOpsList().enqueue(new EnemyBullet(myEnemy, 2), CollisionOp.Operation.ADD);
                   }
             }
             if(movFoe instanceof  Enemy2 && !((Enemy2) movFoe).isOutFrame()){
                 Enemy2 myEnemy = (Enemy2) movFoe;
-                if(getTick()%30 ==0){
+                if(getTick()%33 ==0){
                     CommandCenter.getInstance().getOpsList().enqueue(new SmartBullet(myEnemy, CommandCenter.getInstance().getP38()), CollisionOp.Operation.ADD);
                 }
             }
@@ -309,17 +299,83 @@ public class Game implements Runnable, KeyListener {
     // Ensure number of foes are proportionate to game level
     private void addFoes() {
         if (CommandCenter.getInstance().getLevel() != 0) {
-            if (getTick()%100 == 0){
-                CommandCenter.getInstance().spawnEnemy1_1();
-            }
-            if(getTick()%1000 ==0){
+            if (getTick() == 5 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_1(200, -100);
+            } else if (getTick() == 10 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_1(600, -100);
+                //CommandCenter.getInstance().spawnEnemy2(300, -100);
+            } else if (getTick() == 15 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_1(300, -100);
                 CommandCenter.getInstance().spawnPowerUp();
-            }
-            if(getTick()>1000 && getTick()%300 ==0){
-                CommandCenter.getInstance().spawnEnemy2();
-            }
-            if(getTick()%300 == 0){
-                CommandCenter.getInstance().spawnShip();
+            } else if (getTick() == 20 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_2(300, -100);
+            } else if (getTick() == 25 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            } else if (getTick() == 30 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_1(75, -100);
+            } else if (getTick() == 35 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(600, -100);
+            } else if (getTick() == 40 * 22) {
+                //CommandCenter.getInstance().spawnShip(300, -100);
+                CommandCenter.getInstance().spawnPowerUp();
+            } else if (getTick() == 45 * 22) {
+                CommandCenter.getInstance().spawnEnemy2(300, -100);
+            } else if (getTick() == 50 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_1(75, -100);
+                CommandCenter.getInstance().spawnEnemy2(300, -100);
+            }else if (getTick() == 55 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_1(500, -100);
+            }else if (getTick() == 57 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_2(75, -100);
+            }else if (getTick() == 60 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 65 * 22) {
+                //
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 70 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 75 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 80 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 85 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 90 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 95 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 100 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 105 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 110 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 115 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 120 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 125 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 130 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 135 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 140 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 145 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 150 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 155 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 160 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 165 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 170 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+            }else if (getTick() == 175 * 22) {
+                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }
         }
     }
@@ -328,15 +384,15 @@ public class Game implements Runnable, KeyListener {
         //when a bullet hits a foe
         Bullet1 thisBullet = (Bullet1) myFriend;
 
-		if (movFoe instanceof Enemy1 || movFoe instanceof Turret){
+		if (movFoe instanceof Enemy1 || movFoe instanceof Enemy2 || movFoe instanceof Turret){
 		    //when the foe is a baby fighter jet
             Sound.playSound("kapow.wav");
             movFoe.setDead();
             CommandCenter.getInstance().addScore(movFoe.getWorth());
             CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
             CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
-
 		}
+
 		else if(movFoe instanceof Ship){
 		    //when the foe is a boss ship
 		    Ship thisShip = (Ship) movFoe;
@@ -488,6 +544,12 @@ public class Game implements Runnable, KeyListener {
                     moveDown();
                 }
                 break;
+            case SPEED:
+                if (!CommandCenter.getInstance().getP38().isDead()) {
+                    speedUp();
+                }
+                break;
+
 			default:
 				break;
 			}
@@ -519,6 +581,11 @@ public class Game implements Runnable, KeyListener {
 					bMuted = !bMuted;
 				}
 				break;
+            case SPEED:
+                if (!CommandCenter.getInstance().getP38().isDead()) {
+                    speedDown();
+                }
+                break;
 			default:
 				break;
 			}
@@ -540,41 +607,23 @@ public class Game implements Runnable, KeyListener {
     // Method to move right when the right arrow key is pressed. If Mario is beyond his screen limit, move everything else to left
     private void moveRight() {
         CommandCenter.getInstance().getP38().moveRight();
-       /* if (CommandCenter.getInstance().getP38().getCenter().getX() > P38.SCREEN_RIGHT_LIMIT) {
-            //sCommandCenter.getInstance().getP38().moveNotRight();
-        } else {
-
-        }*/
     }
-
     // Similar to moveRight method but this is for moving left.
     private void moveLeft() {
         CommandCenter.getInstance().getP38().moveLeft();
-        /*if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
-            //CommandCenter.getInstance().getP38().moveNotLeft();
-        } else {
-
-        }*/
     }
     private void moveUp() {
         CommandCenter.getInstance().getP38().moveUp();
-        /*if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
-            *//*----------------------- NEED TO UPDATE -----------------------*//*
-            //moveEverythingRight();
-        } else {
-
-        }*/
     }
     private void moveDown() {
         CommandCenter.getInstance().getP38().moveDown();
-        /*if (CommandCenter.getInstance().getP38().getCenter().getX() < P38.SCREEN_LEFT_LIMIT) {
-            *//*----------------------- NEED TO UPDATE -----------------------*//*
-            //moveEverythingRight();
-        } else {
-
-        }*/
     }
-
+    private void speedUp(){
+	    CommandCenter.getInstance().getP38().speedUp();
+    }
+    private void speedDown(){
+        CommandCenter.getInstance().getP38().speedDown();
+    }
     private void moveEverythingLeft() {
         CommandCenter.getInstance().setMoveCountX(P38.DEFAULT_HORIZONTAL_STEPS);
         CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getP38().getDeltaMoveRightX());
@@ -584,9 +633,5 @@ public class Game implements Runnable, KeyListener {
         CommandCenter.getInstance().setMoveCountX(P38.DEFAULT_HORIZONTAL_STEPS);
         CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getP38().getDeltaMoveLeftX());
     }
-
-
-
-
 }
 

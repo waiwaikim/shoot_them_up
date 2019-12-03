@@ -38,11 +38,11 @@ public class Enemy1 extends Sprite {
                 break;
             case(2):
                 VERTICAL_SPEED = 5;
-                HORIZONTAL_SPEED = -3;
+                HORIZONTAL_SPEED = -1;
                 break;
             case(3):
                 VERTICAL_SPEED = 5 ;
-                HORIZONTAL_SPEED = 3;
+                HORIZONTAL_SPEED = 1;
                 break;
 
             default:

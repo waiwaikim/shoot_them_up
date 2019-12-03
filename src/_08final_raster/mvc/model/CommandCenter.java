@@ -61,7 +61,7 @@ public class CommandCenter {
         //setCoins(0);
 		//setNumMarios(5);
 		setNumP38s(5);
-        nSecondsLeft = 300;
+        nSecondsLeft = 180;
         lSysTimeSeconds = System.currentTimeMillis()/1000;
 	}
 
@@ -94,22 +94,23 @@ public class CommandCenter {
         }
     }
 
-    public void spawnEnemy1_1()  {
-        opsList.enqueue(new Enemy1(200,-100, 1), CollisionOp.Operation.ADD);
+    public void spawnEnemy1_1(int x, int y){
+        opsList.enqueue(new Enemy1(x,y, 1), CollisionOp.Operation.ADD);
     }
-    public void spawnEnemy1_2()  {
-        opsList.enqueue(new Enemy1(200,100, 2), CollisionOp.Operation.ADD);
-    }
-    public void spawnEnemy1_3()  {
-        opsList.enqueue(new Enemy1(200,100, 3), CollisionOp.Operation.ADD);
-    }
-    public void spawnEnemy2()  {
-        opsList.enqueue(new Enemy2(350, -150), CollisionOp.Operation.ADD);
-    }
-    public void spawnShip()  {
 
-	    int x = 400;
-	    int y = -200;
+    public void spawnEnemy1_2(int x, int y)  {
+        opsList.enqueue(new Enemy1(x,y, 2), CollisionOp.Operation.ADD);
+    }
+
+    public void spawnEnemy1_3(int x, int y)  {
+        opsList.enqueue(new Enemy1(x,y, 3), CollisionOp.Operation.ADD);
+    }
+
+    public void spawnEnemy2(int x, int y)  {
+        opsList.enqueue(new Enemy2(x, y), CollisionOp.Operation.ADD);
+    }
+
+    public void spawnShip(int x, int y)  {
 
 	    //turrets bottom to top
 	    Turret turret1 = new Turret(x+4, y+183,2);
@@ -265,8 +266,6 @@ public class CommandCenter {
         this.nDeltaX = nDeltaX;
     }
     public void setDeltaY(int nDeltaY) { this.nDeltaY = nDeltaY; }
-
-
 
     //water
     public void setWaterFirst(Water water) { waterFirst = water;}

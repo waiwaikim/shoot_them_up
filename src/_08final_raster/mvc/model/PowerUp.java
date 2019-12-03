@@ -18,7 +18,7 @@ public class PowerUp extends Sprite  {
         super(nCenterX, nCenterY);
         setTeam(Team.FLOATER);
 
-        setExpire(100);
+        setExpire(2000);
         setRadius(10);
 
         int nx = Game.R.nextInt(6);

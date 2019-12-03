@@ -29,9 +29,6 @@ public class E13_20 {
 
     static ArrayList<ArrayList<Integer>> find_changes(int price, ArrayList<Integer> bills ){
 
-        //if(price <= 0) return new ArrayList<ArrayList<Integer>>();
-
-
         if(price ==  0) {
 
             ArrayList<ArrayList<Integer>> return_list = new ArrayList<ArrayList<Integer>>();

@@ -39,10 +39,10 @@ public class P38 extends Sprite {
 
 
     private int nDeltaY = -4;
-    public static final int DEFAULT_HORIZONTAL_SPEED = 9;
-    public static final int DEFAULT_VERTICAL_SPEED = 9;
-    public static final int DEFAULT_HORIZONTAL_STEPS = 9;
-    public static final int DEFAULT_VERTICAL_STEPS= 9;
+    public static int DEFAULT_HORIZONTAL_SPEED = 7;
+    public static int DEFAULT_VERTICAL_SPEED = 7;
+    public static int DEFAULT_HORIZONTAL_STEPS = 7;
+    public static int DEFAULT_VERTICAL_STEPS= 7;
 
     //need to change later for vertical movement
     public static final int SCREEN_LEFT_LIMIT = 10;
@@ -169,6 +169,18 @@ public class P38 extends Sprite {
         return DEFAULT_VERTICAL_STEPS;
     }
 
+    public void speedUp(){
+        DEFAULT_HORIZONTAL_SPEED = 15;
+        DEFAULT_VERTICAL_SPEED = 15;
+        DEFAULT_HORIZONTAL_STEPS = 15;
+        DEFAULT_VERTICAL_STEPS= 15;
+    }
+    public void speedDown(){
+        DEFAULT_HORIZONTAL_SPEED = 7;
+        DEFAULT_VERTICAL_SPEED = 7;
+        DEFAULT_HORIZONTAL_STEPS = 7;
+        DEFAULT_VERTICAL_STEPS= 7;
+    }
     public boolean checkMoving() {
         if (nMoveRightCount > 0 || nMoveLeftCount > 0 || nMoveUpCount>0 || nMoveDownCount>0) {
             return true;
@@ -185,8 +197,20 @@ public class P38 extends Sprite {
             imgP38 = P38Dead;
             nP38DeadTimeLeft--;
         }
-        else{
-            //different images of P38 moving.
+        else if(nMoveRightCount > 0 && nMoveRightCount /3 == 0 || (CommandCenter.getInstance().getMoveCountX()/3 == 1 && CommandCenter.getInstance().getDeltaX() < 0) ){
+            imgP38 = P38_3;
+        } else if (nMoveRightCount /3 == 1 || (CommandCenter.getInstance().getMoveCountX()/3 == 2 && CommandCenter.getInstance().getDeltaX() < 0)) {
+            imgP38 = P38_4;
+        } else if (nMoveRightCount /3 == 2 || (CommandCenter.getInstance().getMoveCountX()/3 == 3 && CommandCenter.getInstance().getDeltaX() < 0)) {
+            imgP38 = P38_5;
+        } else if (nMoveLeftCount > 0 && nMoveLeftCount /3 == 0 || (CommandCenter.getInstance().getMoveCountX()/3 == 1 && CommandCenter.getInstance().getDeltaX() > 0)) {
+            imgP38 = P38_11;
+        } else if (nMoveLeftCount /3 == 1 || (CommandCenter.getInstance().getMoveCountX()/3 == 2 && CommandCenter.getInstance().getDeltaX() > 0)) {
+            imgP38 = P38_10;
+        } else if (nMoveLeftCount /3 == 2 || (CommandCenter.getInstance().getMoveCountX()/3 == 3 && CommandCenter.getInstance().getDeltaX() > 0)) {
+            imgP38 = P38_9;
+        } else {
+            imgP38 = P38_1;
         }
     }
 }
