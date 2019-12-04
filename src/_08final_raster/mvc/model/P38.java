@@ -24,6 +24,14 @@ public class P38 extends Sprite {
     private Image P38_11 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_11.png").getImage(),p38Width,p38Width);
     private Image P38Dead  = getScaledImage(new ImageIcon(Sprite.strImageDir + "p38_dead.png").getImage(),p38Width,p38Width);
 
+    private Image P38Dead1  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_01.png").getImage(),p38Width,p38Width);
+    private Image P38Dead2  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_02.png").getImage(),p38Width,p38Width);
+    private Image P38Dead3  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_03.png").getImage(),p38Width,p38Width);
+    private Image P38Dead4  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_04.png").getImage(),p38Width,p38Width);
+    private Image P38Dead5  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_05.png").getImage(),p38Width,p38Width);
+    private Image P38Dead6  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_06.png").getImage(),p38Width,p38Width);
+
+
     private Image imgP38;
     private boolean bInit = true;
     private int nEnergy = 100;
@@ -73,7 +81,11 @@ public class P38 extends Sprite {
 
         Point pnt = getCenter();
 
-        if (nMoveRightCount>0) {
+        if(isDead()){
+            setCenter(new Point(pnt.x, pnt.y));
+
+        }
+        else if (nMoveRightCount>0) {
             //moving right
             if(pnt.x+this.p38Width+1 > Game.DIM.width){
                 setCenter(new Point(Game.DIM.width-p38Width, pnt.y));
@@ -138,7 +150,7 @@ public class P38 extends Sprite {
     public void setDead() {
         //System.out.println("I'm in P38.setDead()");
         super.setDead();
-        nP38DeadTimeLeft = 50;
+        nP38DeadTimeLeft = 40;
     }
 
     public void setSpawnLocation(Point lastPoint){
@@ -194,7 +206,20 @@ public class P38 extends Sprite {
 
         if(this.isDead()){
             //image of explosion
-            imgP38 = P38Dead;
+            //imgP38 = P38Dead;
+            if(nP38DeadTimeLeft > 34)
+                imgP38 = P38Dead1;
+            else if(nP38DeadTimeLeft>28 && nP38DeadTimeLeft<=34)
+                imgP38 = P38Dead2;
+            else if(nP38DeadTimeLeft>22 && nP38DeadTimeLeft<=28)
+                imgP38 = P38Dead3;
+            else if(nP38DeadTimeLeft>16 && nP38DeadTimeLeft<=22)
+                imgP38 = P38Dead4;
+            else if(nP38DeadTimeLeft>10 && nP38DeadTimeLeft<=16)
+                imgP38 = P38Dead5;
+            else if(nP38DeadTimeLeft>0&& nP38DeadTimeLeft<=10)
+                imgP38 = P38Dead5;
+
             nP38DeadTimeLeft--;
         }
         else if(nMoveRightCount > 0 && nMoveRightCount /3 == 0 || (CommandCenter.getInstance().getMoveCountX()/3 == 1 && CommandCenter.getInstance().getDeltaX() < 0) ){

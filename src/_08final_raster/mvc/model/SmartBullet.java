@@ -7,7 +7,7 @@ public class SmartBullet extends Sprite {
 
     private int adjustWidth = 15;
     private P38 p38;
-    private static final double PULL = 1.0;
+    private static final double PULL = 0.90;
     private final int VERTICAL_SPEED = 4;
     private final int HORIZONTAL_SPEED = 4;
 
@@ -17,7 +17,7 @@ public class SmartBullet extends Sprite {
         super(enemy.getCenter().x, enemy.getCenter().y);
         setTeam(Team.FOE);
         this.p38 = p38;
-        setExpire(66);
+        setExpire(50);
         setRadius(10);
         setDeltaX(enemy.getDeltaX()+HORIZONTAL_SPEED);
         setDeltaY(enemy.getDeltaY()+VERTICAL_SPEED);

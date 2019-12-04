@@ -18,11 +18,11 @@ public class PowerUp extends Sprite  {
         super(nCenterX, nCenterY);
         setTeam(Team.FLOATER);
 
-        setExpire(2000);
+        setExpire(330);
         setRadius(10);
 
-        int nx = Game.R.nextInt(6);
-        int ny = Game.R.nextInt(6);
+        int nx = Game.R.nextInt(5);
+        int ny = Game.R.nextInt(5);
 
         if(nx%2 == 0)
             setDeltaX(nx);

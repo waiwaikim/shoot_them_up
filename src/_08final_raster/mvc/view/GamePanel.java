@@ -193,6 +193,16 @@ public class GamePanel extends Panel {
                 (Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 2
                         + nFontHeight + 290);
 
+		strDisplay = "SPACE BAR TO SHOOT";
+		grpOff.drawString(strDisplay,
+				(Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 2
+						+ nFontHeight + 320);
+
+		strDisplay = "A : SPPED UP";
+		grpOff.drawString(strDisplay,
+				(Game.DIM.width)/2 - fmt.stringWidth(strDisplay), Game.DIM.height / 2
+						+ nFontHeight + 350);
+
 	}
 
 
