@@ -15,7 +15,7 @@ public class EnemyBullet extends Sprite {
         super(enemy1.getCenter().x, enemy1.getCenter().y);
         setTeam(Team.FOE);
 
-        setExpire(40);
+        setExpire(88);
         setRadius(10);
         setHeight(5);
         setWidth(14);

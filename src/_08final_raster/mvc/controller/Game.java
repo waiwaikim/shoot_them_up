@@ -85,25 +85,34 @@ public class Game implements Runnable, KeyListener {
 
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
 
+
+
+
 		while (Thread.currentThread() == thrAnim) {
 
-			tick();
+
+            tick();
+            //System.out.println(myDate);
 
             // Check items in order of priority
             checkGameOver();
             checkLevelClear();
             checkP38Dead();
-			gmpPanel.update(gmpPanel.getGraphics());
+            gmpPanel.update(gmpPanel.getGraphics());
             checkCollision();
             checkFoes();
             addFoes();
             processQueue();
-			try {
-				lStartTime += ANI_DELAY;
-				Thread.sleep(Math.max(0,lStartTime - System.currentTimeMillis()));
-			} catch (InterruptedException e) {
-				continue;
-			}
+            try {
+
+                lStartTime += ANI_DELAY;
+                Thread.sleep(Math.max(0,lStartTime - System.currentTimeMillis()));
+
+            } catch (InterruptedException e) {
+                continue;
+            }
+
+
 		} // end while
 	} // end run
 
@@ -213,8 +222,6 @@ public class Game implements Runnable, KeyListener {
                                 movFriend.setDead();
                                 stopLoopingSounds(clpMusicBackground);
                                 Sound.playSound("Mario_die.wav");
-
-                                myPlane.setSpawnLocation(pntFriendCenter);
                                 CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
                             }
                         }
@@ -323,10 +330,10 @@ public class Game implements Runnable, KeyListener {
                 CommandCenter.getInstance().spawnShip(300, -100);
                 CommandCenter.getInstance().spawnPowerUp();
             } else if (getTick() == 45 * 22) {
-                CommandCenter.getInstance().spawnEnemy2(300, -100);
+                CommandCenter.getInstance().spawnEnemy2(400, -100);
             } else if (getTick() == 50 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(75, -100);
-                CommandCenter.getInstance().spawnEnemy2(300, -100);
+                CommandCenter.getInstance().spawnEnemy2(200, -100);
             }else if (getTick() == 55 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(500, -100);
             }else if (getTick() == 57 * 22) {
@@ -340,37 +347,36 @@ public class Game implements Runnable, KeyListener {
             }else if (getTick() == 70 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 75 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_1(600, -100);
+                //CommandCenter.getInstance().spawnEnemy1_1(600, -100);
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 80 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(450, -100);
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 85 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_1(300, -100);
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                //CommandCenter.getInstance().spawnEnemy1_1(300, -100);
+                CommandCenter.getInstance().spawnEnemy1_2(600, -100);
             }else if (getTick() == 90 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_1(150, -100);
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                //CommandCenter.getInstance().spawnEnemy1_1(150, -100);
+                //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
                 CommandCenter.getInstance().spawnPowerUp();
                 CommandCenter.getInstance().spawnShip(430, -100);
             }else if (getTick() == 95 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_1(320, -100);
             }else if (getTick() == 100 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_2(600, -100);
             }else if (getTick() == 105 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_2(450, -100);
             }else if (getTick() == 110 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 115 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_1(220, -100);
             }else if (getTick() == 120 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_1(500, -100);
                 CommandCenter.getInstance().spawnPowerUp();
             }else if (getTick() == 125 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_2(700, -100);
             }else if (getTick() == 130 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
-                CommandCenter.getInstance().spawnShip(550, -100);
+
             }else if (getTick() == 135 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 140 * 22) {
@@ -379,20 +385,20 @@ public class Game implements Runnable, KeyListener {
             }else if (getTick() == 145 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 150 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_1(300, -100);
                 CommandCenter.getInstance().spawnShip(550, -100);
             }else if (getTick() == 155 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                CommandCenter.getInstance().spawnEnemy1_1(550, -100);
             }else if (getTick() == 160 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
                 CommandCenter.getInstance().spawnPowerUp();
             }else if (getTick() == 165 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 170 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
-                CommandCenter.getInstance().spawnShip(350, -100);
+                //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                //CommandCenter.getInstance().spawnShip(350, -100);
             }else if (getTick() == 175 * 22) {
-                CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }
         }
     }
@@ -407,7 +413,7 @@ public class Game implements Runnable, KeyListener {
             movFoe.setDead();
             CommandCenter.getInstance().addScore(movFoe.getWorth());
             CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
-            if(movFoe.getDeadTimeLeft() <=0){
+            if(!(movFoe instanceof Enemy1)){
                 CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
             }
 		}
@@ -493,7 +499,8 @@ public class Game implements Runnable, KeyListener {
 		if (nTick == Integer.MAX_VALUE)
 			nTick = 0;
 		else
-			nTick++;
+            nTick++;
+
 	}
 
 	public int getTick() {

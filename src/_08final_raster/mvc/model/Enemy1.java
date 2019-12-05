@@ -115,9 +115,10 @@ public class Enemy1 extends Sprite {
                 imgEnemy = imgSmoke03;
             else if(nDeadTimeLeft>5 && nDeadTimeLeft<=10)
                 imgEnemy = imgSmoke04;
-            else if(nDeadTimeLeft>0 && nDeadTimeLeft<=5)
+            else if(nDeadTimeLeft>1 && nDeadTimeLeft<=5)
                 imgEnemy = imgSmoke05;
-
+            else if(nDeadTimeLeft ==0)
+                CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
             nDeadTimeLeft--;
         }
         else {

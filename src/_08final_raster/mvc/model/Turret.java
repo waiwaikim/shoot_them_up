@@ -58,15 +58,16 @@ public class Turret extends Sprite  {
         super.move();
         if (!bDead) {
             setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
-        } else {
-            nWorthY+= nWorthDeltaY;
         }
+        //else {
+        //    nWorthY+= nWorthDeltaY;
+        //}
     }
     public void setDead() {
         bDead = true;
         setRadius(0);
         nDeadTimeLeft = 2;
-        nWorthY = getCenter().y;
+        //nWorthY = getCenter().y;
     }
 
     public boolean isDead() { return bDead; }

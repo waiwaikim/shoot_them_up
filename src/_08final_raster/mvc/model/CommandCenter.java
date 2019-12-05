@@ -85,11 +85,7 @@ public class CommandCenter {
                 //p38 = new P38(P38.getSpawnLocationX(), P38.getnSpawnLoctionY()-150);
                 p38 = new P38(350,700);
                 opsList.enqueue(p38, CollisionOp.Operation.ADD);
-                setInitPosFlag(true);
                 setNumP38s(getNumP38s() - 1);
-            }
-
-            if (!bFirst) {
             }
         }
     }
