@@ -415,6 +415,7 @@ public class Game implements Runnable, KeyListener {
             CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
             if(!(movFoe instanceof Enemy1)){
                 CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+                //
             }
 		}
 
