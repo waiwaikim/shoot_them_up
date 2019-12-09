@@ -221,7 +221,7 @@ public class Game implements Runnable, KeyListener {
                             if (!myPlane.isDead()){
                                 movFriend.setDead();
                                 stopLoopingSounds(clpMusicBackground);
-                                Sound.playSound("Mario_die.wav");
+                                Sound.playSound("DeathFlash.wav");
                                 CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
                             }
                         }
@@ -312,6 +312,8 @@ public class Game implements Runnable, KeyListener {
         if (CommandCenter.getInstance().getLevel() != 0) {
             if (getTick() == 5 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(200, -100);
+                CommandCenter.getInstance().spawnShip(300, -100);
+                //CommandCenter.getInstance().spawnEnemy2(400, -100);
             } else if (getTick() == 10 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(600, -100);
                 //CommandCenter.getInstance().spawnEnemy2(300, -100);
@@ -413,9 +415,8 @@ public class Game implements Runnable, KeyListener {
             movFoe.setDead();
             CommandCenter.getInstance().addScore(movFoe.getWorth());
             CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
-            if(!(movFoe instanceof Enemy1)){
+            if(!(movFoe instanceof Enemy1 || movFoe instanceof Enemy2)){
                 CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
-                //
             }
 		}
 
@@ -429,7 +430,9 @@ public class Game implements Runnable, KeyListener {
                     thisShip.setDead();
                     CommandCenter.getInstance().addScore(thisShip.getWorth());
                     CommandCenter.getInstance().getOpsList().enqueue(myFriend, CollisionOp.Operation.REMOVE);
-                    CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+                    if(!(movFoe instanceof Ship)){
+                        CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+                    }
                 }
                 else {
                     Sound.playSound("Mario_Block.wav");

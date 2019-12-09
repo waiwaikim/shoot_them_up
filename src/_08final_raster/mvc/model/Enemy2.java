@@ -17,9 +17,16 @@ public class Enemy2 extends Sprite {
     private int nWorthDeltaY = -5;
     private int nWorthY = 0;
 
+    private Image imgEnemy;
+    private Image imgEnemyLive= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe2.png").getImage(), adjustWidth, adjustWidth);
 
-    private Image imgEnemy= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe2.png").getImage(), adjustWidth, adjustWidth);
-    private Image imgEnemyExploded = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode.gif").getImage(), adjustWidth, adjustWidth);
+
+    private Image imgSmoke01 = getScaledImage(new ImageIcon(Sprite.strImageDir + "enemy_smoke_01.png").getImage(), adjustWidth, adjustWidth);
+    private Image imgSmoke02 = getScaledImage(new ImageIcon(Sprite.strImageDir + "enemy_smoke_02.png").getImage(), adjustWidth, adjustWidth);
+    private Image imgSmoke03 = getScaledImage(new ImageIcon(Sprite.strImageDir + "enemy_smoke_03.png").getImage(), adjustWidth, adjustWidth);
+    private Image imgSmoke04 = getScaledImage(new ImageIcon(Sprite.strImageDir + "enemy_smoke_04.png").getImage(), adjustWidth, adjustWidth);
+    private Image imgSmoke05 = getScaledImage(new ImageIcon(Sprite.strImageDir + "enemy_smoke_05.png").getImage(), adjustWidth, adjustWidth);
+
 
     public Enemy2(int nCenterX, int nCenterY) {
         super(nCenterX, nCenterY);
@@ -31,6 +38,7 @@ public class Enemy2 extends Sprite {
         setHeight(32);
         setWidth(32);
         bDead = false;
+        imgEnemy = imgEnemyLive;
         nEnergy= 300;
     }
 
@@ -72,7 +80,7 @@ public class Enemy2 extends Sprite {
     public void setDead() {
         bDead = true;
         setRadius(0);
-        nDeadTimeLeft = 2;
+        nDeadTimeLeft = 25;
         nWorthY = getCenter().y;
 
     }
@@ -81,13 +89,24 @@ public class Enemy2 extends Sprite {
     public boolean isDead() { return bDead; }
 
     private void setImage() {
-        if (bDead) {
-            //System.out.println("I'm in ehre");
-            imgEnemy= imgEnemyExploded;
-            if (nDeadTimeLeft == 2) {
-                setCenter(new Point(getCenter().x, getCenter().y ));
-            }
+        if (this.isDead()) {
+            if(nDeadTimeLeft>20)
+                imgEnemy = imgSmoke01;
+            else if(nDeadTimeLeft>15 && nDeadTimeLeft<=20)
+                imgEnemy = imgSmoke02;
+            else if(nDeadTimeLeft>10 && nDeadTimeLeft<=15)
+                imgEnemy = imgSmoke03;
+            else if(nDeadTimeLeft>5 && nDeadTimeLeft<=10)
+                imgEnemy = imgSmoke04;
+            else if(nDeadTimeLeft>1 && nDeadTimeLeft<=5)
+                imgEnemy = imgSmoke05;
+            else if(nDeadTimeLeft ==0)
+                CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
             nDeadTimeLeft--;
+        }
+        else {
+
+            imgEnemy = imgEnemyLive;
         }
     }
 

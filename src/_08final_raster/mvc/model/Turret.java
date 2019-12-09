@@ -14,10 +14,13 @@ public class Turret extends Sprite  {
     private int nWorthY = 0;
     private int nImgIndex;
 
+
+
     private Image imgTurret1= getScaledImage(new ImageIcon(Sprite.strImageDir + "turret_01.png").getImage(), 25, 25);
     private Image imgTurret2= getScaledImage(new ImageIcon(Sprite.strImageDir + "turret_02.png").getImage(), 25, 25);
     private Image imgTurret3= getScaledImage(new ImageIcon(Sprite.strImageDir + "turret_03.png").getImage(), 25, 25);
     private Image imgTurret4= getScaledImage(new ImageIcon(Sprite.strImageDir + "turret_04.png").getImage(), 25, 25);
+
 
     public Turret(int nCenterX, int nCenterY, int nImgIndex) {
         super(nCenterX, nCenterY);
