@@ -4,7 +4,6 @@ import _08final_raster.mvc.controller.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class P38 extends Sprite {
 
@@ -12,29 +11,21 @@ public class P38 extends Sprite {
     private int p38Width = 60;
 
     private Image P38_1 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_1.png").getImage(),p38Width,p38Width);
-    private Image P38_2 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_2.png").getImage(),p38Width,p38Width);
     private Image P38_3 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_3.png").getImage(),p38Width,p38Width);
     private Image P38_4 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_4.png").getImage(),p38Width,p38Width);
     private Image P38_5 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_5.png").getImage(),p38Width,p38Width);
-    private Image P38_6 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_6.png").getImage(),p38Width,p38Width);
-    private Image P38_7 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_7.png").getImage(),p38Width,p38Width);
-    private Image P38_8 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_8.png").getImage(),p38Width,p38Width);
     private Image P38_9 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_9.png").getImage(),p38Width,p38Width);
     private Image P38_10 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_10.png").getImage(),p38Width,p38Width);
     private Image P38_11 = getScaledImage(new ImageIcon(Sprite.strImageDir + "P38_11.png").getImage(),p38Width,p38Width);
-    private Image P38Dead  = getScaledImage(new ImageIcon(Sprite.strImageDir + "p38_dead.png").getImage(),p38Width,p38Width);
-
+ 
     private Image P38Dead1  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_01.png").getImage(),p38Width,p38Width);
     private Image P38Dead2  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_02.png").getImage(),p38Width,p38Width);
     private Image P38Dead3  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_03.png").getImage(),p38Width,p38Width);
     private Image P38Dead4  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_04.png").getImage(),p38Width,p38Width);
     private Image P38Dead5  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_05.png").getImage(),p38Width,p38Width);
-    private Image P38Dead6  = getScaledImage(new ImageIcon(Sprite.strImageDir + "explode_06.png").getImage(),p38Width,p38Width);
 
 
     private Image imgP38;
-    private boolean bInit = true;
-    private int nEnergy = 100;
     private int nP38DeadTimeLeft = 0;
 
     private int nMoveRightCount = 0;
@@ -46,7 +37,6 @@ public class P38 extends Sprite {
 
 
 
-    private int nDeltaY = -4;
     public static int DEFAULT_HORIZONTAL_SPEED = 7;
     public static int DEFAULT_VERTICAL_SPEED = 7;
     public static int DEFAULT_HORIZONTAL_STEPS = 7;

@@ -9,9 +9,13 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by ag on 6/17/2015.
  */
-public class GameOpsList extends LinkedList {
+public class GameOpsList extends LinkedList<Object> {
 
-    private ReentrantLock lock;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6273581335696433172L;
+	private ReentrantLock lock;
 
     public GameOpsList() {
         this.lock =   new ReentrantLock();

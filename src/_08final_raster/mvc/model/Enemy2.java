@@ -10,13 +10,8 @@ public class Enemy2 extends Sprite {
     private final int VERTICAL_SPEED = 1;
     private int adjustWidth = 80;
     private boolean bDead;
-    private int nEnergy = 0;
-
     private int nDeadTimeLeft = 0;
     public static final int WORTH = +200;
-    private int nWorthDeltaY = -5;
-    private int nWorthY = 0;
-
     private Image imgEnemy;
     private Image imgEnemyLive= getScaledImage(new ImageIcon(Sprite.strImageDir + "foe2.png").getImage(), adjustWidth, adjustWidth);
 
@@ -39,7 +34,6 @@ public class Enemy2 extends Sprite {
         setWidth(32);
         bDead = false;
         imgEnemy = imgEnemyLive;
-        nEnergy= 300;
     }
 
     @Override
@@ -60,8 +54,6 @@ public class Enemy2 extends Sprite {
             setCenter(new Point(getCenter().x + getDeltaX() , getCenter().y + getDeltaY()));
             //setDownDirection();
         } else {
-            //setCenter(new Point(getCenter().x , getCenter().y ));
-            nWorthY+= nWorthDeltaY;
         }
     }
     @Override
@@ -81,8 +73,7 @@ public class Enemy2 extends Sprite {
         bDead = true;
         setRadius(0);
         nDeadTimeLeft = 25;
-        nWorthY = getCenter().y;
-
+       
     }
 
     @Override

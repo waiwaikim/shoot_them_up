@@ -17,8 +17,8 @@ public class Score extends Sprite {
 
     public Score(int nCenterX, int nCenterY) {
         super(nCenterX, nCenterY);
-        this.nCenterX = nCenterX;
-        this.nCenterY = nCenterY;
+        this.setnCenterX(nCenterX);
+        this.setnCenterY(nCenterY);
         setTeam(Team.BACKGROUND);
         setCenter(new Point(nCenterX, nCenterY));
     }
@@ -62,4 +62,36 @@ public class Score extends Sprite {
             System.out.println("Invalid font or font file not found");
         }
     }
+
+	public int getnFontWidth() {
+		return nFontWidth;
+	}
+
+	public void setnFontWidth(int nFontWidth) {
+		this.nFontWidth = nFontWidth;
+	}
+
+	public int getnFontHeight() {
+		return nFontHeight;
+	}
+
+	public void setnFontHeight(int nFontHeight) {
+		this.nFontHeight = nFontHeight;
+	}
+
+	public int getnCenterX() {
+		return nCenterX;
+	}
+
+	public void setnCenterX(int nCenterX) {
+		this.nCenterX = nCenterX;
+	}
+
+	public int getnCenterY() {
+		return nCenterY;
+	}
+
+	public void setnCenterY(int nCenterY) {
+		this.nCenterY = nCenterY;
+	}
 }

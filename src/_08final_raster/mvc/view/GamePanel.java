@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 public class GamePanel extends Panel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2126541633739435820L;
 	// FIELDS
     // The following "off" vars are used for the off-screen double-bufferred image.
 	private Dimension dimOff;
@@ -117,7 +121,7 @@ public class GamePanel extends Panel {
 	}
 
 	//for each movable array, process it.
-	private void iterateMovables(Graphics g, ArrayList<Movable>...movMovz){
+	private void iterateMovables(Graphics g, @SuppressWarnings("unchecked") ArrayList<Movable>...movMovz){
 
 		for (ArrayList<Movable> movMovs : movMovz) {
 			for (Movable mov : movMovs) {
@@ -140,7 +144,7 @@ public class GamePanel extends Panel {
         loadGameFont();
 		g.setFont(fnt);						// take care of some simple font stuff
 		fmt = g.getFontMetrics();
-		nFontWidth = fmt.getMaxAdvance();
+		setnFontWidth(fmt.getMaxAdvance());
 		nFontHeight = fmt.getHeight();
 		g.setFont(fntBig);					// set font info
 	}
@@ -219,4 +223,20 @@ public class GamePanel extends Panel {
             System.out.println("Invalid font or font file not found");
         }
     }
+
+	public int getnFontWidth() {
+		return nFontWidth;
+	}
+
+	public void setnFontWidth(int nFontWidth) {
+		this.nFontWidth = nFontWidth;
+	}
+
+	public Image getImgP38Life() {
+		return imgP38Life;
+	}
+
+	public void setImgP38Life(Image imgP38Life) {
+		this.imgP38Life = imgP38Life;
+	}
 }

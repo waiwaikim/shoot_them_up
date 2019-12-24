@@ -5,12 +5,9 @@ import java.awt.*;
 
 public class EnemyBullet extends Sprite {
 
-    private int adjustWidth = 15;
     private Image imgEnemyBullet= getScaledImage(new ImageIcon(Sprite.strImageDir + "enemyBullet.png").getImage(), 7, 20);
     private int VERTICAL_SPEED ;
     private int  HORIZONTAL_SPEED;
-    private int nBulletDirection;
-
     public EnemyBullet(Sprite enemy1, int nBulletDirection) {
         super(enemy1.getCenter().x, enemy1.getCenter().y);
         setTeam(Team.FOE);
@@ -19,8 +16,6 @@ public class EnemyBullet extends Sprite {
         setRadius(10);
         setHeight(5);
         setWidth(14);
-
-        this.nBulletDirection = nBulletDirection;
 
         switch(nBulletDirection){
             case(1):

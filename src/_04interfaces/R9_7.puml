@@ -1,6 +1,0 @@
-@startuml
-Person <|-- Employee
-Person <|-- Student
-Employee <|-- Instructor
-Object <|-- Classroom
-@enduml

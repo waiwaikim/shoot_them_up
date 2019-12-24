@@ -10,8 +10,7 @@ public class Turret extends Sprite  {
 
     private int nDeadTimeLeft = 0;
     public static final int WORTH = +200;
-    private int nWorthDeltaY = -5;
-    private int nWorthY = 0;
+   
     private int nImgIndex;
 
 

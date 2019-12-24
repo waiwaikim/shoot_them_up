@@ -1,7 +1,5 @@
 package _08final_raster.mvc.model;
 
-import sun.text.normalizer.VersionInfo;
-
 import javax.swing.*;
 import java.awt.*;
 

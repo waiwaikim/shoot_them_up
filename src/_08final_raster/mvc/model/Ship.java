@@ -131,4 +131,20 @@ public class Ship extends Sprite {
         return WORTH;
     }
 
+	public int getnWorthDeltaY() {
+		return nWorthDeltaY;
+	}
+
+	public void setnWorthDeltaY(int nWorthDeltaY) {
+		this.nWorthDeltaY = nWorthDeltaY;
+	}
+
+	public int getnWorthY() {
+		return nWorthY;
+	}
+
+	public void setnWorthY(int nWorthY) {
+		this.nWorthY = nWorthY;
+	}
+
 }

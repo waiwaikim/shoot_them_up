@@ -8,7 +8,7 @@ public class SmartBullet extends Sprite {
     private int adjustWidth = 15;
     private P38 p38;
     private static final double PULL = 0.90;
-    private final int VERTICAL_SPEED = 4;
+    private final int VERTICAL_SPEED = 5;
     private final int HORIZONTAL_SPEED = 4;
 
     private Image imgSmartBullet= getScaledImage(new ImageIcon(Sprite.strImageDir + "enemySmartBullet.png").getImage(), adjustWidth, adjustWidth);

@@ -5,15 +5,14 @@ import _08final_raster.mvc.view.GamePanel;
 import _08final_raster.sounds.Sound;
 
 import javax.sound.sampled.Clip;
+import javax.swing.*;
+import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.EnumMap;
+
 import java.util.Random;
 
-import static java.awt.event.KeyEvent.VK_N;
 
 /**
  *
@@ -21,8 +20,12 @@ import static java.awt.event.KeyEvent.VK_N;
  *  ----        ------      -----------
  *  12/05/2019    Waiwai      Extended code to implement 1941 Counter Attack
  */
-public class Game implements Runnable, KeyListener {
+public class Game extends JApplet implements Runnable, KeyListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3638601231540049920L;
 	// FIELDS
 	public static final Dimension DIM = new Dimension(700, 1000); //the dimension of the game.
 	private GamePanel gmpPanel;
@@ -83,7 +86,7 @@ public class Game implements Runnable, KeyListener {
 
 		thrAnim.setPriority(Thread.MIN_PRIORITY);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+        //SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
 
 
 
@@ -119,7 +122,7 @@ public class Game implements Runnable, KeyListener {
     // Check if level is clear after the completion of fireworks
     private void checkLevelClear() {
         if (CommandCenter.getInstance().isLevelClear()) {
-            CommandCenter.getInstance().getOpsList().enqueue(new Firework(Game.R.nextInt(_08final.mvc.controller.Game.DIM.width), Game.R.nextInt(Game.DIM.height) - 300),
+            CommandCenter.getInstance().getOpsList().enqueue(new Firework(Game.R.nextInt(_08final_raster.mvc.controller.Game.DIM.width), Game.R.nextInt(Game.DIM.height) - 300),
                                                             CollisionOp.Operation.ADD);
             for (Movable movFriend : CommandCenter.getInstance().getMovFriends()) {
                 if (movFriend instanceof Firework) {
@@ -150,8 +153,6 @@ public class Game implements Runnable, KeyListener {
     // Method to draw background based on current level of game.
 	private void drawBackGround() {
         Water water;
-        Score score;
-
         //Add first water
         water = new Water(0, -600);
         CommandCenter.getInstance().getOpsList().enqueue(water, CollisionOp.Operation.ADD);
@@ -165,12 +166,12 @@ public class Game implements Runnable, KeyListener {
         //Add Island
         CommandCenter.getInstance().getOpsList().enqueue(new Island(550,-400), CollisionOp.Operation.ADD);
         CommandCenter.getInstance().getOpsList().enqueue(new Island(DIM.width- 600,-4000), CollisionOp.Operation.ADD);
-        CommandCenter.getInstance().getOpsList().enqueue(new Island(400,-6000), CollisionOp.Operation.ADD);
-        CommandCenter.getInstance().getOpsList().enqueue(new Island(0,-8000), CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(new Island(400,-5000), CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(new Island(0,-7000), CollisionOp.Operation.ADD);
         CommandCenter.getInstance().getOpsList().enqueue(new Island(100,-14000), CollisionOp.Operation.ADD);
         CommandCenter.getInstance().getOpsList().enqueue(new Island(30,-15000), CollisionOp.Operation.ADD);
 
-        CommandCenter.getInstance().getOpsList().enqueue(score = new Score(0, 0), CollisionOp.Operation.ADD);
+        CommandCenter.getInstance().getOpsList().enqueue(new Score(0, 0), CollisionOp.Operation.ADD);
     }
 
 
@@ -312,7 +313,7 @@ public class Game implements Runnable, KeyListener {
         if (CommandCenter.getInstance().getLevel() != 0) {
             if (getTick() == 5 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(200, -100);
-                CommandCenter.getInstance().spawnShip(300, -100);
+                //CommandCenter.getInstance().spawnShip(300, -100);
                 //CommandCenter.getInstance().spawnEnemy2(400, -100);
             } else if (getTick() == 10 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(600, -100);
@@ -351,8 +352,10 @@ public class Game implements Runnable, KeyListener {
             }else if (getTick() == 75 * 22) {
                 //CommandCenter.getInstance().spawnEnemy1_1(600, -100);
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
+                //CommandCenter.getInstance().spawnEnemy1_1(300, -100);
             }else if (getTick() == 80 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(450, -100);
+                CommandCenter.getInstance().spawnPowerUp();
                 //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 85 * 22) {
                 //CommandCenter.getInstance().spawnEnemy1_1(300, -100);
@@ -361,13 +364,16 @@ public class Game implements Runnable, KeyListener {
                 //CommandCenter.getInstance().spawnEnemy1_1(150, -100);
                 //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
                 CommandCenter.getInstance().spawnPowerUp();
-                CommandCenter.getInstance().spawnShip(430, -100);
+                CommandCenter.getInstance().spawnEnemy1_1(600, -100);
             }else if (getTick() == 95 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(320, -100);
+
+                CommandCenter.getInstance().spawnShip(430, -100);
             }else if (getTick() == 100 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_2(600, -100);
             }else if (getTick() == 105 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_2(450, -100);
+                CommandCenter.getInstance().spawnEnemy2(200, -100);
             }else if (getTick() == 110 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 115 * 22) {
@@ -378,7 +384,8 @@ public class Game implements Runnable, KeyListener {
             }else if (getTick() == 125 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_2(700, -100);
             }else if (getTick() == 130 * 22) {
-
+                CommandCenter.getInstance().spawnEnemy2(400, -100);
+                CommandCenter.getInstance().spawnEnemy1_1(600, -100);
             }else if (getTick() == 135 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 140 * 22) {
@@ -388,12 +395,13 @@ public class Game implements Runnable, KeyListener {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 150 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(300, -100);
-                CommandCenter.getInstance().spawnShip(550, -100);
+
             }else if (getTick() == 155 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_1(550, -100);
             }else if (getTick() == 160 * 22) {
                 //CommandCenter.getInstance().spawnEnemy1_3(0, -100);
                 CommandCenter.getInstance().spawnPowerUp();
+                CommandCenter.getInstance().spawnShip(550, -100);
             }else if (getTick() == 165 * 22) {
                 CommandCenter.getInstance().spawnEnemy1_3(0, -100);
             }else if (getTick() == 170 * 22) {
@@ -653,15 +661,6 @@ public class Game implements Runnable, KeyListener {
     }
     private void speedDown(){
         CommandCenter.getInstance().getP38().speedDown();
-    }
-    private void moveEverythingLeft() {
-        CommandCenter.getInstance().setMoveCountX(P38.DEFAULT_HORIZONTAL_STEPS);
-        CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getP38().getDeltaMoveRightX());
-    }
-
-    private void moveEverythingRight() {
-        CommandCenter.getInstance().setMoveCountX(P38.DEFAULT_HORIZONTAL_STEPS);
-        CommandCenter.getInstance().setDeltaX(-CommandCenter.getInstance().getP38().getDeltaMoveLeftX());
     }
 }
 

@@ -6,6 +6,10 @@ import java.awt.event.WindowEvent;
 
 public class GameFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7684580266343082459L;
 	private JPanel contentPane;
 	private BorderLayout borderLayout1 = new BorderLayout();
 

@@ -4,12 +4,10 @@ package _08final_raster.mvc.model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Water extends Sprite{
 
     private int waterWidth = 100;
-    private int gapAdjust = 0;
     private final int VERTICAL_SPEED = 2;
     private Image imgWater1 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_1.png").getImage(),waterWidth,waterWidth);
     private Image imgWater2 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_2.png").getImage(),waterWidth,waterWidth);
@@ -20,11 +18,7 @@ public class Water extends Sprite{
     private Image imgWater7 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_7.png").getImage(),waterWidth,waterWidth);
     private Image imgWater8 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_8.png").getImage(),waterWidth,waterWidth);
 
-    private Image imgWater9 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_9.png").getImage(),waterWidth,waterWidth);
-    private Image imgWater10 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_10.png").getImage(),waterWidth,waterWidth);
-    private Image imgWater11 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_11.png").getImage(),waterWidth,waterWidth);
-    private Image imgWater12 = getScaledImage(new ImageIcon(Sprite.strImageDir + "water_12.png").getImage(),waterWidth,waterWidth);
-
+ 
     /*private Image imgWater3 = new ImageIcon(Sprite.strImageDir + "water_3.png").getImage();
     private Image imgWater4 = new ImageIcon(Sprite.strImageDir + "water_4.png").getImage();
     private Image imgWater5 = new ImageIcon(Sprite.strImageDir + "water_5.png").getImage();
@@ -39,8 +33,8 @@ public class Water extends Sprite{
 
     public Water(int nCenterX, int nCenterY) {
         super(nCenterX, nCenterY);
-        this.nCenterX = nCenterX;
-        this.nCenterY = nCenterY;
+        this.setnCenterX(nCenterX);
+        this.setnCenterY(nCenterY);
         setDeltaY(VERTICAL_SPEED);
         setTeam(Team.BACKGROUND);
         setCenter(new Point(nCenterX, nCenterY));
@@ -99,6 +93,22 @@ public class Water extends Sprite{
             setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
         }*/
     }
+
+	public int getnCenterY() {
+		return nCenterY;
+	}
+
+	public void setnCenterY(int nCenterY) {
+		this.nCenterY = nCenterY;
+	}
+
+	public int getnCenterX() {
+		return nCenterX;
+	}
+
+	public void setnCenterX(int nCenterX) {
+		this.nCenterX = nCenterX;
+	}
 
 
 }

@@ -33,8 +33,8 @@ public class Island extends Sprite {
 
     public Island(int nCenterX, int nCenterY) {
         super(nCenterX, nCenterY);
-        this.nCenterX = nCenterX;
-        this.nCenterY = nCenterY;
+        this.setnCenterX(nCenterX);
+        this.setnCenterY(nCenterY);
         //setExpire(1000);
         setDeltaY(VERTICAL_SPEED);
         setTeam(Team.BACKGROUND);
@@ -82,5 +82,21 @@ public class Island extends Sprite {
             setCenter(new Point(getCenter().x , getCenter().y + getDeltaY()));
         }*/
     }
+
+	public int getnCenterY() {
+		return nCenterY;
+	}
+
+	public void setnCenterY(int nCenterY) {
+		this.nCenterY = nCenterY;
+	}
+
+	public int getnCenterX() {
+		return nCenterX;
+	}
+
+	public void setnCenterX(int nCenterX) {
+		this.nCenterX = nCenterX;
+	}
 
 }
